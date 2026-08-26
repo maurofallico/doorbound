@@ -3,24 +3,97 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 1.5f;
+    //MOVEMENT
+    [SerializeField] private float walkSpeed = 1.5f;
+    [SerializeField] private float runSpeed = 3.2f;
     [SerializeField] private float rotationSpeed = 160f;
-    [SerializeField] private LayerMask groundLayer;
 
-    [SerializeField] private float floorDetection = 0.32f;
+
+    //JUMP
     [SerializeField] private float jumpForce = 4f;
+    [SerializeField] private float floorDetection = 0.32f;
+    [SerializeField] private LayerMask groundLayer;
 
 
     private Rigidbody rb;
-    private Vector2 moveInput;
-
     private Animator animator;
 
+    private Vector2 moveInput;
+    private bool isRunning;
+    private bool isGrounded;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        isGrounded = IsGrounded();
+        UpdateAnimations();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+        Rotate();
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        isRunning = context.ReadValueAsButton();
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed && isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    private void Move()
+    {
+        float currentSpeed = isRunning ? runSpeed : walkSpeed;
+        Vector3 movement = transform.forward * moveInput.y;
+
+        rb.MovePosition(
+            rb.position + movement * currentSpeed * Time.fixedDeltaTime
+        );
+    }
+
+    private void Rotate()
+    {
+        float rotation = moveInput.x;
+
+        Quaternion deltaRotation = Quaternion.Euler(
+            0f,
+            rotation * rotationSpeed * Time.fixedDeltaTime,
+            0f
+        );
+
+        rb.MoveRotation(rb.rotation * deltaRotation);
+    }
+
+    private void UpdateAnimations()
+    {
+        bool movingForward = moveInput.y > 0.1f;
+        bool movingBackward = moveInput.y < -0.1f;
+        bool turningRight = moveInput.x > 0.1f && Mathf.Abs(moveInput.y) < 0.1f;
+        bool turningLeft = moveInput.x < -0.1f && Mathf.Abs(moveInput.y) < 0.1f;
+
+        animator.SetBool("running", isRunning);
+        animator.SetBool("forward", movingForward);
+        animator.SetBool("backward", movingBackward);
+        animator.SetBool("turnRight", turningRight);
+        animator.SetBool("turnLeft", turningLeft);
+        animator.SetBool("jumping", !isGrounded);
     }
 
     private bool IsGrounded()
@@ -32,91 +105,14 @@ public class PlayerMovement : MonoBehaviour
             groundLayer
         );
     }
-    
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        moveInput = context.ReadValue<Vector2>();
-    }
 
-    public void OnJump(InputAction.CallbackContext context)
+    private void OnDrawGizmosSelected()
     {
-        if (context.performed && IsGrounded())
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
-    }
+        Gizmos.color = Color.red;
 
-    public void OnRun(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            speed = 3.2f;
-            animator.SetBool("running", true);
-        }
-        else
-        {
-            speed = 1.5f;
-            animator.SetBool("running", false);
-
-        }
-    }
-
-    private void Update()
-    {
-        Debug.DrawRay(
+        Gizmos.DrawLine(
             transform.position,
-            Vector3.down * floorDetection,
-            Color.red
+            transform.position + Vector3.down * floorDetection
         );
-
-        float rotation = moveInput.x;
-
-        transform.Rotate(
-            0f,
-            rotation * rotationSpeed * Time.deltaTime,
-            0f
-        );
-
-        Vector3 movement = transform.forward * moveInput.y;
-
-        transform.position += movement * speed * Time.deltaTime;
-
-        if (rotation > 0 && moveInput.y == 0)
-        {
-            animator.SetBool("turnRight", true);
-        }
-        else if (rotation < 0 && moveInput.y == 0)
-        {
-            animator.SetBool("turnLeft", true);
-        }
-        else
-        {
-            animator.SetBool("turnLeft", false);
-            animator.SetBool("turnRight", false);
-        }
-
-        if (moveInput.y > 0)
-        {
-            animator.SetBool("forward", true);
-            animator.SetBool("backward", false);
-        }
-        else if (moveInput.y < 0)
-        {
-            animator.SetBool("forward", false);
-            animator.SetBool("backward", true);
-        }
-        else
-        {
-            animator.SetBool("forward", false);
-            animator.SetBool("backward", false);
-        }
-        if (IsGrounded())
-        {
-            animator.SetBool("jumping", false);
-        }
-        else
-        {
-            animator.SetBool("jumping", true);
-        }
     }
 }
