@@ -3,25 +3,28 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //MOVEMENT
+    // MOVEMENT
     [SerializeField] private float walkSpeed = 1.5f;
     [SerializeField] private float runSpeed = 3.2f;
-    [SerializeField] private float rotationSpeed = 160f;
+    [SerializeField] private float rotationSpeed = 10f;
 
+    // CAMERA
+    [SerializeField] private Transform cameraTransform;
+    [SerializeField] private Transform cameraPivot;
 
-    //JUMP
-    [SerializeField] private float jumpForce = 4f;
-    [SerializeField] private float floorDetection = 0.32f;
-    [SerializeField] private LayerMask groundLayer;
-
+    [SerializeField] private float verticalLookSpeed = 0.1f;
+    [SerializeField] private float minPitch = -15f;
+    [SerializeField] private float maxPitch = 20f;
 
     private Rigidbody rb;
     private Animator animator;
 
     private Vector2 moveInput;
-    private bool isRunning;
-    private bool isGrounded;
+    private Vector2 lookInput;
 
+    private bool isRunning;
+    private float yaw;
+    private float pitch;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -30,14 +33,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        isGrounded = IsGrounded();
+        LookCamera();
         UpdateAnimations();
     }
 
     private void FixedUpdate()
     {
         Move();
-        Rotate();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -50,69 +52,79 @@ public class PlayerMovement : MonoBehaviour
         isRunning = context.ReadValueAsButton();
     }
 
-    public void OnJump(InputAction.CallbackContext context)
+    public void OnLook(InputAction.CallbackContext context)
     {
-        if (context.performed && isGrounded)
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+        lookInput = context.ReadValue<Vector2>();
     }
 
     private void Move()
     {
         float currentSpeed = isRunning ? runSpeed : walkSpeed;
-        Vector3 movement = transform.forward * moveInput.y;
+
+        // Dirección horizontal de la cámara
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+
+        forward.y = 0f;
+        right.y = 0f;
+
+        forward.Normalize();
+        right.Normalize();
+
+        // Movimiento relativo a la cámara
+        Vector3 movement =
+            forward * moveInput.y +
+            right * moveInput.x;
+
+        movement = Vector3.ClampMagnitude(movement, 1f);
+
+        // El personaje SOLO rota mientras se está moviendo
+        if (movement.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation =
+                Quaternion.LookRotation(forward);
+
+            Quaternion newRotation = Quaternion.RotateTowards(
+                rb.rotation,
+                targetRotation,
+                rotationSpeed * 100f * Time.fixedDeltaTime
+            );
+
+            rb.MoveRotation(newRotation);
+        }
 
         rb.MovePosition(
-            rb.position + movement * currentSpeed * Time.fixedDeltaTime
+            rb.position +
+            movement * currentSpeed * Time.fixedDeltaTime
         );
     }
 
-    private void Rotate()
+    private void LookCamera()
     {
-        float rotation = moveInput.x;
+        yaw += lookInput.x * 0.1f;
+        pitch -= lookInput.y * verticalLookSpeed;
 
-        Quaternion deltaRotation = Quaternion.Euler(
-            0f,
-            rotation * rotationSpeed * Time.fixedDeltaTime,
-            0f
+        pitch = Mathf.Clamp(
+            pitch,
+            minPitch,
+            maxPitch
         );
 
-        rb.MoveRotation(rb.rotation * deltaRotation);
+        cameraPivot.localRotation =
+            Quaternion.Euler(pitch, yaw, 0f);
     }
 
     private void UpdateAnimations()
     {
         bool movingForward = moveInput.y > 0.1f;
         bool movingBackward = moveInput.y < -0.1f;
-        bool turningRight = moveInput.x > 0.1f && Mathf.Abs(moveInput.y) < 0.1f;
-        bool turningLeft = moveInput.x < -0.1f && Mathf.Abs(moveInput.y) < 0.1f;
+        bool strafeRight = moveInput.x > 0.1f;
+        bool strafeLeft = moveInput.x < -0.1f;
 
         animator.SetBool("running", isRunning);
         animator.SetBool("forward", movingForward);
         animator.SetBool("backward", movingBackward);
-        animator.SetBool("turnRight", turningRight);
-        animator.SetBool("turnLeft", turningLeft);
-        animator.SetBool("jumping", !isGrounded);
-    }
-
-    private bool IsGrounded()
-    {
-        return Physics.Raycast(
-            transform.position,
-            Vector3.down,
-            floorDetection,
-            groundLayer
-        );
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawLine(
-            transform.position,
-            transform.position + Vector3.down * floorDetection
-        );
+        animator.SetBool("strafeRight", strafeRight);
+        animator.SetBool("strafeLeft", strafeLeft);
     }
 }
