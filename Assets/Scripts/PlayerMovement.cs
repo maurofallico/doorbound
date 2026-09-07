@@ -40,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        Debug.Log(
+        $"Input: {moveInput} | AngularVelocity: {rb.angularVelocity} | Rotation: {rb.rotation.eulerAngles}"
+    );
     }
 
     public void OnMove(InputAction.CallbackContext context)

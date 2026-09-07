@@ -2857,7 +2857,7 @@ MonoBehaviour:
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
-  m_SelectedVertices: 08000000
+  m_SelectedVertices: 
 --- !u!4 &237463736
 Transform:
   m_ObjectHideFlags: 0
@@ -3042,7 +3042,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &302435959
 CapsuleCollider:
