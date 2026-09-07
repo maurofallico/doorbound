@@ -2907,8 +2907,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7859c3b960e35ab4ea9d4792dca6c3d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  walkSpeed: 5
-  runSpeed: 9
+  walkSpeed: 3
+  runSpeed: 6
   rotationSpeed: 10
   cameraTransform: {fileID: 330585546}
   cameraPivot: {fileID: 1284979389}
@@ -3011,7 +3011,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.21, y: 1.585, z: -32.3}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1494322918}

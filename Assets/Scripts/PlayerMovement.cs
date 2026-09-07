@@ -40,9 +40,6 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        Debug.Log(
-        $"Input: {moveInput} | AngularVelocity: {rb.angularVelocity} | Rotation: {rb.rotation.eulerAngles}"
-    );
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -84,8 +81,9 @@ public class PlayerMovement : MonoBehaviour
         // El personaje SOLO rota mientras se está moviendo
         if (movement.sqrMagnitude > 0.01f)
         {
+
             Quaternion targetRotation =
-                Quaternion.LookRotation(forward);
+                Quaternion.LookRotation(movement);
 
             Quaternion newRotation = Quaternion.RotateTowards(
                 rb.rotation,
@@ -119,15 +117,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateAnimations()
     {
-        bool movingForward = moveInput.y > 0.1f;
-        bool movingBackward = moveInput.y < -0.1f;
-        bool strafeRight = moveInput.x > 0.1f;
-        bool strafeLeft = moveInput.x < -0.1f;
+        bool isMoving = moveInput.y != 0 || moveInput.x !=0;
 
         animator.SetBool("running", isRunning);
-        animator.SetBool("forward", movingForward);
-        animator.SetBool("backward", movingBackward);
-        animator.SetBool("strafeRight", strafeRight);
-        animator.SetBool("strafeLeft", strafeLeft);
+        animator.SetBool("moving", isMoving);
     }
 }
