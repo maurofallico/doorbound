@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    [SerializeField] private float gravity = -9.81f;
+    private float verticalVelocity;
+
     // MOVEMENT
     [SerializeField] private float walkSpeed = 1.5f;
     [SerializeField] private float runSpeed = 3.2f;
@@ -16,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float minPitch = -15f;
     [SerializeField] private float maxPitch = 20f;
 
-    private Rigidbody rb;
+    private CharacterController controller;
     private Animator animator;
 
     private Vector2 moveInput;
@@ -27,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private float pitch;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
 
@@ -82,22 +86,22 @@ public class PlayerMovement : MonoBehaviour
         if (movement.sqrMagnitude > 0.01f)
         {
 
-            Quaternion targetRotation =
-                Quaternion.LookRotation(movement);
+            Quaternion targetRotation = Quaternion.LookRotation(movement);
 
             Quaternion newRotation = Quaternion.RotateTowards(
-                rb.rotation,
+                transform.rotation,
                 targetRotation,
                 rotationSpeed * 100f * Time.fixedDeltaTime
             );
 
-            rb.MoveRotation(newRotation);
+            transform.rotation = newRotation;
         }
+        // Gravedad
+        verticalVelocity += gravity * Time.deltaTime;
+        movement.y = verticalVelocity;
 
-        rb.MovePosition(
-            rb.position +
-            movement * currentSpeed * Time.fixedDeltaTime
-        );
+        // Movimiento
+        controller.Move(movement * currentSpeed * Time.deltaTime);
     }
 
     private void LookCamera()
