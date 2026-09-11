@@ -1,6 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// =====================================================================
+// CHANGELOG
+// [Axel] - Fix camara:
+//          Move() estaba en FixedUpdate, ahora esta en Update junto con
+//          LookCamera(), para que el movimiento y la rotacion de camara
+//          vayan al mismo ritmo (frame a frame).
+// =====================================================================
+
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -35,15 +43,16 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    // --- FIX (Axel): el movimiento estaba en FixedUpdate() mientras la camara
+    // se actualiza cada frame en Update()/LateUpdate(). Ese desfase entre el tick
+    // fisico fijo y el framerate real es lo que causaba un "tiron" al girar la camara.
+    // Solucion: CharacterController no es un Rigidbody, asi que Move() no necesita
+    // FixedUpdate. Ahora todo corre junto, en el mismo frame.
     private void Update()
     {
         LookCamera();
-        UpdateAnimations();
-    }
-
-    private void FixedUpdate()
-    {
         Move();
+        UpdateAnimations();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -65,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
-        // Dirección horizontal de la cámara
+        // Direccion horizontal de la camara
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
 
@@ -75,14 +84,14 @@ public class PlayerMovement : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        // Movimiento relativo a la cámara
+        // Movimiento relativo a la camara
         Vector3 movement =
             forward * moveInput.y +
             right * moveInput.x;
 
         movement = Vector3.ClampMagnitude(movement, 1f);
 
-        // El personaje SOLO rota mientras se está moviendo
+        // El personaje SOLO rota mientras se esta moviendo
         if (movement.sqrMagnitude > 0.01f)
         {
 
@@ -91,7 +100,8 @@ public class PlayerMovement : MonoBehaviour
             Quaternion newRotation = Quaternion.RotateTowards(
                 transform.rotation,
                 targetRotation,
-                rotationSpeed * 100f * Time.fixedDeltaTime
+                // (Axel) Time.deltaTime en vez de fixedDeltaTime, porque ahora Move() vive en Update()
+                rotationSpeed * 100f * Time.deltaTime
             );
 
             transform.rotation = newRotation;
