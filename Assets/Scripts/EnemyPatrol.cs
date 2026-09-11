@@ -107,8 +107,10 @@ public class EnemyPatrol : MonoBehaviour
     // --- DETECCIÓN POR CAMPO DE VISIÓN ---
     private void DetectPlayer()
     {
-        if (playerTransform == null) return;
-
+        if (playerTransform == null)
+        {
+            return;
+        }
         Vector3 dirToPlayer = (playerTransform.position - transform.position);
         float distanceToPlayer = dirToPlayer.magnitude;
 
