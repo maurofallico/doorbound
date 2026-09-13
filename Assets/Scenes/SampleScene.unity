@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 175861223}
   - component: {fileID: 175861222}
   - component: {fileID: 175861221}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2666,7 +2666,7 @@ GameObject:
   - component: {fileID: 237463734}
   - component: {fileID: 237463733}
   - component: {fileID: 237463732}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor+Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3454,7 +3454,7 @@ GameObject:
   - component: {fileID: 473427504}
   - component: {fileID: 473427503}
   - component: {fileID: 473427502}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4554,6 +4554,7 @@ GameObject:
   - component: {fileID: 823041416}
   - component: {fileID: 823041415}
   - component: {fileID: 823041414}
+  - component: {fileID: 823041413}
   - component: {fileID: 823041412}
   m_Layer: 0
   m_Name: Enemy
@@ -4586,14 +4587,18 @@ MonoBehaviour:
   waypointReachedThreshold: 0.1
   waitTimeAtWaypoint: 1
   chaseSpeed: 4
+  gravity: -9.81
+  groundedVerticalSpeed: -2
   loseSightDelay: 2
   viewRadius: 6
   viewAngle: 90
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 64
   playerTag: Player
   rotateTowardsMovement: 1
+  enemyRenderer: {fileID: 823041415}
+  chasingColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!135 &823041414
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4614,6 +4619,31 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!143 &823041413
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823041411}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &823041415
 MeshRenderer:
@@ -6584,7 +6614,7 @@ GameObject:
   - component: {fileID: 1532970213}
   - component: {fileID: 1532970212}
   - component: {fileID: 1532970211}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17809,7 +17839,7 @@ GameObject:
   - component: {fileID: 2027739291}
   - component: {fileID: 2027739290}
   - component: {fileID: 2027739289}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19928,7 +19958,7 @@ GameObject:
   - component: {fileID: 2072116150}
   - component: {fileID: 2072116149}
   - component: {fileID: 2072116148}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

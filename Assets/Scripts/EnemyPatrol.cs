@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(CharacterController))]
 public class EnemyPatrol : MonoBehaviour
 {
     private enum State { Patrolling, Chasing }
@@ -27,6 +27,10 @@ public class EnemyPatrol : MonoBehaviour
 
     [SerializeField] private float chaseSpeed = 3.5f;
 
+    [Header("Grounding")]
+    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float groundedVerticalSpeed = -2f;
+
     [SerializeField] private float loseSightDelay = 2f;
 
     [SerializeField] private float viewRadius = 6f;
@@ -40,16 +44,31 @@ public class EnemyPatrol : MonoBehaviour
 
     [SerializeField] private bool rotateTowardsMovement = true;
 
+    [Header("Visual Feedback")]
+    [SerializeField] private Renderer enemyRenderer;
+    [SerializeField] private Color chasingColor = Color.red;
+
     private int currentWaypointIndex = 0;
     private int patrolDirection = 1; 
     private float waitTimer = 0f;
     private bool isWaiting = false;
 
     private Transform playerTransform;
+    private CharacterController controller;
+    private MaterialPropertyBlock materialPropertyBlock;
+    private Color patrolColor;
+    private int colorPropertyId = -1;
+    private float verticalVelocity;
     private float loseSightTimer = 0f;
+
+    private static readonly int BaseColorProperty = Shader.PropertyToID("_BaseColor");
+    private static readonly int ColorProperty = Shader.PropertyToID("_Color");
 
     private void Awake()
     {
+        controller = GetComponent<CharacterController>();
+        InitializeVisualFeedback();
+
         GameObject playerObj = GameObject.FindGameObjectWithTag(playerTag);
         if (playerObj != null)
         {
@@ -69,6 +88,8 @@ public class EnemyPatrol : MonoBehaviour
         {
             Patrol();
         }
+
+        ApplyGravity();
     }
 
     // --- DETECCIÓN POR CAMPO DE VISIÓN ---
@@ -85,9 +106,17 @@ public class EnemyPatrol : MonoBehaviour
 
         if (distanceToPlayer <= viewRadius)
         {
-            float angleToPlayer = Vector3.Angle(GetFacingDirection(), dirToPlayer);
+            Vector3 horizontalDirectionToPlayer = dirToPlayer;
+            horizontalDirectionToPlayer.y = 0f;
+            float angleToPlayer = Vector3.Angle(
+                GetFacingDirection(),
+                horizontalDirectionToPlayer
+            );
+            bool isInsideViewAngle =
+                currentState == State.Chasing ||
+                angleToPlayer <= viewAngle / 2f;
 
-            if (angleToPlayer <= viewAngle / 2f)
+            if (isInsideViewAngle)
             {
                 RaycastHit hit;
                 bool hitSomething = Physics.Raycast(
@@ -107,7 +136,7 @@ public class EnemyPatrol : MonoBehaviour
 
         if (canSeePlayer)
         {
-            currentState = State.Chasing;
+            SetState(State.Chasing);
             loseSightTimer = loseSightDelay;
         }
         else if (currentState == State.Chasing)
@@ -116,7 +145,7 @@ public class EnemyPatrol : MonoBehaviour
             loseSightTimer -= Time.deltaTime;
             if (loseSightTimer <= 0f)
             {
-                currentState = State.Patrolling;
+                SetState(State.Patrolling);
             }
         }
     }
@@ -132,22 +161,11 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (playerTransform == null)
         {
-            currentState = State.Patrolling;
+            SetState(State.Patrolling);
             return;
         }
 
-        Vector3 direction = playerTransform.position - transform.position;
-
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            playerTransform.position,
-            chaseSpeed * Time.deltaTime
-        );
-
-        if (rotateTowardsMovement && direction.sqrMagnitude > 0.0001f)
-        {
-            RotateTowards(direction);
-        }
+        MoveTowardsTarget(playerTransform.position, chaseSpeed);
     }
 
     // --- PATRULLAJE ---
@@ -169,19 +187,11 @@ public class EnemyPatrol : MonoBehaviour
         }
 
         Transform target = waypoints[currentWaypointIndex];
-        Vector3 direction = (target.position - transform.position);
+        Vector3 direction = target.position - transform.position;
+        direction.y = 0f;
         float distance = direction.magnitude;
 
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            target.position,
-            patrolSpeed * Time.deltaTime
-        );
-
-        if (rotateTowardsMovement && direction.sqrMagnitude > 0.0001f)
-        {
-            RotateTowards(direction);
-        }
+        MoveTowardsTarget(target.position, patrolSpeed);
 
         if (distance <= waypointReachedThreshold)
         {
@@ -193,6 +203,95 @@ public class EnemyPatrol : MonoBehaviour
 
             AdvanceWaypointIndex();
         }
+    }
+
+    private void MoveTowardsTarget(Vector3 targetPosition, float speed)
+    {
+        Vector3 direction = targetPosition - transform.position;
+        direction.y = 0f;
+
+        float distance = direction.magnitude;
+        if (distance < 0.0001f)
+        {
+            return;
+        }
+
+        float movementDistance = Mathf.Min(speed * Time.deltaTime, distance);
+        controller.Move(direction.normalized * movementDistance);
+
+        if (rotateTowardsMovement)
+        {
+            RotateTowards(direction);
+        }
+    }
+
+    private void ApplyGravity()
+    {
+        if (controller.isGrounded && verticalVelocity < 0f)
+        {
+            verticalVelocity = groundedVerticalSpeed;
+        }
+        else
+        {
+            verticalVelocity += gravity * Time.deltaTime;
+        }
+
+        controller.Move(Vector3.up * verticalVelocity * Time.deltaTime);
+    }
+
+    private void InitializeVisualFeedback()
+    {
+        if (enemyRenderer == null)
+        {
+            enemyRenderer = GetComponent<Renderer>();
+        }
+
+        Material sharedMaterial = enemyRenderer != null ? enemyRenderer.sharedMaterial : null;
+        if (sharedMaterial == null)
+        {
+            return;
+        }
+
+        if (sharedMaterial.HasProperty(BaseColorProperty))
+        {
+            colorPropertyId = BaseColorProperty;
+        }
+        else if (sharedMaterial.HasProperty(ColorProperty))
+        {
+            colorPropertyId = ColorProperty;
+        }
+        else
+        {
+            return;
+        }
+
+        patrolColor = sharedMaterial.GetColor(colorPropertyId);
+        materialPropertyBlock = new MaterialPropertyBlock();
+        ApplyStateColor();
+    }
+
+    private void SetState(State nextState)
+    {
+        if (currentState == nextState)
+        {
+            return;
+        }
+
+        currentState = nextState;
+        ApplyStateColor();
+    }
+
+    private void ApplyStateColor()
+    {
+        if (enemyRenderer == null || materialPropertyBlock == null || colorPropertyId < 0)
+        {
+            return;
+        }
+
+        enemyRenderer.GetPropertyBlock(materialPropertyBlock);
+        Color stateColor = currentState == State.Chasing ? chasingColor : patrolColor;
+        materialPropertyBlock.SetColor(colorPropertyId, stateColor);
+        enemyRenderer.SetPropertyBlock(materialPropertyBlock);
     }
 
     private void AdvanceWaypointIndex()
