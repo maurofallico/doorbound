@@ -60,6 +60,7 @@ public class EnemyPatrol : MonoBehaviour
     private int colorPropertyId = -1;
     private float verticalVelocity;
     private float loseSightTimer = 0f;
+    private bool defeatPending;
 
     private static readonly int BaseColorProperty = Shader.PropertyToID("_BaseColor");
     private static readonly int ColorProperty = Shader.PropertyToID("_Color");
@@ -78,6 +79,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Update()
     {
+        if (defeatPending) return;
         DetectPlayer();
 
         if (currentState == State.Chasing)
@@ -90,6 +92,21 @@ public class EnemyPatrol : MonoBehaviour
         }
 
         ApplyGravity();
+    }
+
+    private void LateUpdate()
+    {
+        if (!defeatPending) return;
+
+        // Load outside the physics callback, once all movement has finished.
+        enabled = false;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.GameOver();
+        }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene("GameOver");
     }
 
     // --- DETECCIÓN POR CAMPO DE VISIÓN ---
@@ -339,22 +356,29 @@ public class EnemyPatrol : MonoBehaviour
         HandlePlayerContact(collision.gameObject);
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        HandlePlayerContact(hit.gameObject);
+    }
+
     
     private void OnTriggerEnter(Collider other)
     {
         HandlePlayerContact(other.gameObject);
     }
 
-    private void HandlePlayerContact(GameObject other)
+    public void HandlePlayerContact(GameObject other)
     {
-        if (other.CompareTag(playerTag))
+        if (defeatPending) return;
+
+        // Colliders may be on a child of the tagged player object.
+        for (Transform contact = other.transform; contact != null; contact = contact.parent)
         {
-            if (GameManager.Instance != null)
+            if (contact.CompareTag(playerTag))
             {
-                GameManager.Instance.GameOver();
-                SceneManager.LoadScene("GameOver");
+                defeatPending = true;
+                return;
             }
-           
         }
     }
 
