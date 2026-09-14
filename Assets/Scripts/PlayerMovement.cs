@@ -55,6 +55,15 @@ public class PlayerMovement : MonoBehaviour
         UpdateAnimations();
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        EnemyPatrol enemy = hit.collider.GetComponentInParent<EnemyPatrol>();
+        if (enemy != null)
+        {
+            enemy.HandlePlayerContact(gameObject);
+        }
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
