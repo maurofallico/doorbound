@@ -5,11 +5,15 @@ public class PlayerInventory : MonoBehaviour
 {
     private readonly HashSet<string> keys = new HashSet<string>();
 
+    public bool HasAnyKey => keys.Count > 0;
+
     public void AddKey(string keyId)
     {
         if (string.IsNullOrWhiteSpace(keyId)) return;
 
         keys.Add(keyId);
+        GameHud.Instance?.SetInventory(string.Join(", ", keys));
+        GameHud.Instance?.ShowMessage($"Llave obtenida: {keyId}");
         Debug.Log($"Llave obtenida: {keyId}");
     }
 
