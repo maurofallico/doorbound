@@ -16,6 +16,15 @@ public class EnemyPatrol : MonoBehaviour
    
     [SerializeField] private Transform[] waypoints;
 
+    [Header("Circular Room")]
+    [SerializeField] private bool restrictToRoom;
+    [SerializeField] private Vector3 roomCenter;
+    [SerializeField] private Vector2 roomRadii = new Vector2(10.65f, 13.25f);
+    [SerializeField] private float wallMargin = 0.75f;
+    [SerializeField] private float circularPatrolRadius = 5f;
+    [SerializeField] private float roomHeightTolerance = 2f;
+    private int circularWaypoint;
+
    
     [SerializeField] private PatrolMode patrolMode = PatrolMode.PingPong;
 
@@ -116,12 +125,19 @@ public class EnemyPatrol : MonoBehaviour
         {
             return;
         }
+        if (restrictToRoom && !IsInsideRoom(playerTransform.position))
+        {
+            loseSightTimer = 0f;
+            SetState(State.Patrolling);
+            return;
+        }
         Vector3 dirToPlayer = (playerTransform.position - transform.position);
         float distanceToPlayer = dirToPlayer.magnitude;
 
         bool canSeePlayer = false;
 
-        if (distanceToPlayer <= viewRadius)
+        // Inside the room, entry alerts the enemy regardless of distance or facing.
+        if (restrictToRoom || distanceToPlayer <= viewRadius)
         {
             Vector3 horizontalDirectionToPlayer = dirToPlayer;
             horizontalDirectionToPlayer.y = 0f;
@@ -130,6 +146,7 @@ public class EnemyPatrol : MonoBehaviour
                 horizontalDirectionToPlayer
             );
             bool isInsideViewAngle =
+                restrictToRoom ||
                 currentState == State.Chasing ||
                 angleToPlayer <= viewAngle / 2f;
 
@@ -188,6 +205,17 @@ public class EnemyPatrol : MonoBehaviour
     // --- PATRULLAJE ---
     private void Patrol()
     {
+        if (restrictToRoom)
+        {
+            float angle = circularWaypoint * Mathf.PI / 4f;
+            Vector3 targetPoint = roomCenter + new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * circularPatrolRadius;
+            MoveTowardsTarget(targetPoint, patrolSpeed);
+            Vector3 remaining = targetPoint - transform.position;
+            remaining.y = 0f;
+            if (remaining.magnitude <= Mathf.Max(waypointReachedThreshold, 0.15f))
+                circularWaypoint = (circularWaypoint + 1) % 8;
+            return;
+        }
         if (waypoints == null || waypoints.Length == 0)
         {
             return;
@@ -224,6 +252,16 @@ public class EnemyPatrol : MonoBehaviour
 
     private void MoveTowardsTarget(Vector3 targetPosition, float speed)
     {
+        if (restrictToRoom)
+        {
+            Vector3 offset = targetPosition - roomCenter;
+            offset.y = 0f;
+            Vector2 movementRadii = new Vector2(
+                Mathf.Max(0.1f, roomRadii.x - wallMargin),
+                Mathf.Max(0.1f, roomRadii.y - wallMargin));
+            float normalizedDistance = new Vector2(offset.x / movementRadii.x, offset.z / movementRadii.y).magnitude;
+            targetPosition = roomCenter + offset / Mathf.Max(1f, normalizedDistance);
+        }
         Vector3 direction = targetPosition - transform.position;
         direction.y = 0f;
 
@@ -295,7 +333,21 @@ public class EnemyPatrol : MonoBehaviour
         }
 
         currentState = nextState;
+        if (restrictToRoom && nextState == State.Patrolling)
+        {
+            Vector3 offset = transform.position - roomCenter;
+            circularWaypoint = (Mathf.RoundToInt(Mathf.Atan2(offset.z, offset.x) / (Mathf.PI / 4f)) + 9) % 8;
+        }
         ApplyStateColor();
+    }
+
+    private bool IsInsideRoom(Vector3 position)
+    {
+        Vector3 offset = position - roomCenter;
+        if (Mathf.Abs(offset.y) > roomHeightTolerance) return false;
+        offset.y = 0f;
+        return new Vector2(offset.x / Mathf.Max(0.1f, roomRadii.x),
+            offset.z / Mathf.Max(0.1f, roomRadii.y)).sqrMagnitude <= 1f;
     }
 
     private void ApplyStateColor()
@@ -385,8 +437,20 @@ public class EnemyPatrol : MonoBehaviour
     
     private void OnDrawGizmos()
     {
+        if (restrictToRoom)
+        {
+            Vector3 previous = roomCenter + Vector3.right * roomRadii.x;
+            Gizmos.color = Color.green;
+            for (int i = 1; i <= 64; i++)
+            {
+                float angle = i * Mathf.PI * 2f / 64f;
+                Vector3 next = roomCenter + new Vector3(Mathf.Cos(angle) * roomRadii.x, 0f, Mathf.Sin(angle) * roomRadii.y);
+                Gizmos.DrawLine(previous, next);
+                previous = next;
+            }
+        }
         
-        if (waypoints != null && waypoints.Length > 0)
+        if (!restrictToRoom && waypoints != null && waypoints.Length > 0)
         {
             Gizmos.color = Color.red;
             for (int i = 0; i < waypoints.Length; i++)

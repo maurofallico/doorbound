@@ -5558,6 +5558,12 @@ MonoBehaviour:
   - {fileID: 2052713861}
   - {fileID: 1258518103}
   patrolMode: 0
+  restrictToRoom: 1
+  roomCenter: {x: 13.147564, y: 0.6, z: -4.102249}
+  roomRadii: {x: 10.65, y: 13.25}
+  wallMargin: 0.75
+  circularPatrolRadius: 5
+  roomHeightTolerance: 2
   patrolSpeed: 3
   waypointReachedThreshold: 0.1
   waitTimeAtWaypoint: 1
@@ -5686,7 +5692,7 @@ Transform:
   m_GameObject: {fileID: 823041411}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.39, y: 1.98, z: -22.14}
+  m_LocalPosition: {x: 18.147564, y: 0.6, z: -4.102249}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
