@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour
         {
             gameOverPanel.SetActive(true);
         }
-
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         if (pauseOnGameOver)
         {
             Time.timeScale = 0f;
@@ -62,6 +63,9 @@ public class GameManager : MonoBehaviour
             victoryPanel.SetActive(true);
         }
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
         Time.timeScale = 0f;
     }
 
