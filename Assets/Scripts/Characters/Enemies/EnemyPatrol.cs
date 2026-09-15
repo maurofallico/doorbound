@@ -106,8 +106,6 @@ public class EnemyPatrol : MonoBehaviour
     private void LateUpdate()
     {
         if (!defeatPending) return;
-
-        // Load outside the physics callback, once all movement has finished.
         enabled = false;
         if (GameManager.Instance != null)
         {
@@ -115,7 +113,6 @@ public class EnemyPatrol : MonoBehaviour
         }
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        SceneManager.LoadScene("GameOver");
     }
 
     // --- DETECCIÓN POR CAMPO DE VISIÓN ---
