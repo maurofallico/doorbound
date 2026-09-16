@@ -3,7 +3,7 @@ using UnityEngine;
 public class LockedDoor : MonoBehaviour, IInteractable
 {
     [SerializeField] private bool requiresKey;
-    [SerializeField] private string requiredKeyId = "llave_maestra";
+    [SerializeField] private string requiredKeyId;
 
     [SerializeField] private Animator animator;
 
@@ -48,9 +48,7 @@ public class LockedDoor : MonoBehaviour, IInteractable
         {
             if (!playerInventory.HasKey(requiredKeyId))
             {
-                string message = playerInventory.HasAnyKey
-                    ? "Esta llave no es la indicada"
-                    : "Necesitas una llave";
+                string message = "Necesitas la llave " + requiredKeyId;
 
                 GameHud.Instance?.ShowMessage(message);
                 return;
