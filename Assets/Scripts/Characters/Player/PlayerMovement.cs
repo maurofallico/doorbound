@@ -1,14 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// =====================================================================
-// CHANGELOG
-// [Axel] - Fix camara:
-//          Move() estaba en FixedUpdate, ahora esta en Update junto con
-//          LookCamera(), para que el movimiento y la rotacion de camara
-//          vayan al mismo ritmo (frame a frame).
-// =====================================================================
-
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -28,6 +20,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float minPitch = -15f;
     [SerializeField] private float maxPitch = 20f;
 
+    // CROUCHING
+    [SerializeField] private float standingHeight = 1.8f;
+    [SerializeField] private float crouchingHeight = 1.0f;
+
+    [SerializeField] private float standingCenterY = 0.43f;
+    [SerializeField] private float crouchingCenterY = 0.03f;
+
     private CharacterController controller;
     private Animator animator;
 
@@ -35,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 lookInput;
 
     private bool isRunning;
+    private bool isCrouching;
+    private bool runInput;
+    private bool crouchInput;
     private float yaw;
     private float pitch;
     private void Awake()
@@ -46,15 +48,14 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
     }
 
-    // --- FIX (Axel): el movimiento estaba en FixedUpdate() mientras la camara
-    // se actualiza cada frame en Update()/LateUpdate(). Ese desfase entre el tick
-    // fisico fijo y el framerate real es lo que causaba un "tiron" al girar la camara.
-    // Solucion: CharacterController no es un Rigidbody, asi que Move() no necesita
-    // FixedUpdate. Ahora todo corre junto, en el mismo frame.
     private void Update()
     {
         LookCamera();
+
+        UpdateStates();
+
         Move();
+
         UpdateAnimations();
     }
 
@@ -74,12 +75,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnRun(InputAction.CallbackContext context)
     {
-        isRunning = context.ReadValueAsButton();
+        runInput = context.ReadValueAsButton();
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
         lookInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnCrouch(InputAction.CallbackContext context)
+    {
+        crouchInput = context.ReadValueAsButton();
     }
 
     private void Move()
@@ -112,8 +118,7 @@ public class PlayerMovement : MonoBehaviour
             Quaternion newRotation = Quaternion.RotateTowards(
                 transform.rotation,
                 targetRotation,
-                // (Axel) Time.deltaTime en vez de fixedDeltaTime, porque ahora Move() vive en Update()
-                rotationSpeed * 100f * Time.deltaTime
+                !isRunning ? rotationSpeed * 100f * Time.deltaTime : rotationSpeed * 100f * 1.5f * Time.deltaTime
             );
 
             transform.rotation = newRotation;
@@ -141,11 +146,45 @@ public class PlayerMovement : MonoBehaviour
             Quaternion.Euler(pitch, yaw, 0f);
     }
 
+    private void UpdateStates()
+    {
+        isCrouching = crouchInput;
+        isRunning = runInput && !isCrouching;
+        UpdateCharacterController();
+    }
+
+    private void UpdateCharacterController()
+    {
+        if (isCrouching)
+        {
+            controller.height = crouchingHeight;
+
+            Vector3 center = controller.center;
+            center.y = crouchingCenterY;
+            controller.center = center;
+        }
+        else
+        {
+            controller.height = standingHeight;
+
+            Vector3 center = controller.center;
+            center.y = standingCenterY;
+            controller.center = center;
+        }
+    }
+
     private void UpdateAnimations()
     {
-        bool isMoving = moveInput.y != 0 || moveInput.x !=0;
+        bool isMoving = moveInput.sqrMagnitude > 0.01f;
 
-        animator.SetBool("running", isRunning);
-        animator.SetBool("moving", isMoving);
+        float moveAmount = 0f;
+
+        if (isMoving)
+        {
+            moveAmount = isRunning ? 1f : 0.5f;
+        }
+
+        animator.SetFloat("moveAmount", moveAmount, 0.1f, Time.deltaTime);
+        animator.SetBool("crouching", isCrouching);
     }
 }
