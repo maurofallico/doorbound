@@ -4648,7 +4648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: requiresKey
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: openStateName
@@ -15692,7 +15692,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: requiresKey
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: openStateName
@@ -23927,7 +23927,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: requiresKey
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: openStateName
@@ -52065,15 +52065,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d856469efd75e4645a85bdac0628af2a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.258
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d856469efd75e4645a85bdac0628af2a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.302
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d856469efd75e4645a85bdac0628af2a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.17426844
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d856469efd75e4645a85bdac0628af2a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -61459,7 +61459,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: -0.25, y: 0.6, z: -0.175}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!95 &2055722086
 Animator:
   serializedVersion: 7
@@ -61503,10 +61503,10 @@ MonoBehaviour:
   verticalLookSpeed: 0.1
   minPitch: -15
   maxPitch: 20
-  standingHeight: 2
-  crouchingHeight: 1.6
-  standingCenterY: 0.43
-  crouchingCenterY: 0.2
+  standingHeight: 1.8
+  crouchingHeight: 1.2
+  standingCenterY: 0.95
+  crouchingCenterY: 0.6
 --- !u!114 &2055722088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61618,7 +61618,7 @@ Transform:
   m_GameObject: {fileID: 2055722082}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.5, y: 7.83, z: -67.8}
+  m_LocalPosition: {x: -9.51, y: 1.205, z: -38.01}
   m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
   m_ConstrainProportionsScale: 1
   m_Children:
