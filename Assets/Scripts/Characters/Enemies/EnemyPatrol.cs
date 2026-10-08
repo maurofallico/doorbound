@@ -4,8 +4,10 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyPatrol : MonoBehaviour
 {
-    private enum State { Patrolling, Chasing }
+    public enum State { Patrolling, Searching, Chasing }
     private State currentState = State.Patrolling;
+
+    public State CurrentState => currentState;
 
     private enum PatrolMode
     {
@@ -30,6 +32,7 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private float chaseSpeed = 3.5f;
 
     [SerializeField] private float loseSightDelay = 2f;
+    [SerializeField] private float searchDuration = 2f;
     [SerializeField] private float viewRadius = 6f;
 
     [Range(0, 360)]
@@ -49,6 +52,7 @@ public class EnemyPatrol : MonoBehaviour
     private NavMeshAgent agent;
     private Vector3 spawnPosition;
     private float loseSightTimer = 0f;
+    private float searchTimer;
     private bool defeatPending;
 
     private IPatrolStrategy patrolStrategy;
@@ -91,6 +95,10 @@ public class EnemyPatrol : MonoBehaviour
         if (currentState == State.Chasing)
         {
             ChasePlayer();
+        }
+        else if (currentState == State.Searching)
+        {
+            SearchForPlayer();
         }
         else
         {
@@ -174,6 +182,15 @@ public class EnemyPatrol : MonoBehaviour
             loseSightTimer -= Time.deltaTime;
             if (loseSightTimer <= 0f)
             {
+                SetState(State.Searching);
+                searchTimer = searchDuration;
+            }
+        }
+        else if (currentState == State.Searching)
+        {
+            searchTimer -= Time.deltaTime;
+            if (searchTimer <= 0f)
+            {
                 SetState(State.Patrolling);
             }
         }
@@ -193,6 +210,12 @@ public class EnemyPatrol : MonoBehaviour
         }
 
         MoveTowardsTarget(playerTransform.position, chaseSpeed);
+    }
+
+    private void SearchForPlayer()
+    {
+        mover.Stop();
+        transform.Rotate(0f, 90f * Time.deltaTime, 0f);
     }
 
     private void Patrol()

@@ -24,6 +24,18 @@ public class EnemyMove
         }
 
         agent.speed = speed;
+        agent.isStopped = false;
         agent.SetDestination(targetPosition);
+    }
+
+    public void Stop()
+    {
+        if (!agent.isOnNavMesh)
+        {
+            return;
+        }
+
+        agent.isStopped = true;
+        agent.ResetPath();
     }
 }
