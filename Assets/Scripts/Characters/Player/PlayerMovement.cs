@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float standingCenterY = 0.43f;
     [SerializeField] private float crouchingCenterY = 0.03f;
+    [SerializeField] private float minimumStepOffset = 0.5f;
 
     private CharacterController controller;
     private Animator animator;
@@ -43,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+
+        // The level's steps are taller than the old 0.3 default. Raising the
+        // step offset prevents the controller from catching on each stair.
+        controller.stepOffset = Mathf.Max(controller.stepOffset, minimumStepOffset);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -92,6 +97,12 @@ public class PlayerMovement : MonoBehaviour
     {
         float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
+        // CharacterController does not apply a grounded velocity automatically.
+        // Without this reset, gravity accumulates forever and can push the player
+        // through imperfect floor seams in the level.
+        if (controller.isGrounded && verticalVelocity < 0f)
+            verticalVelocity = -2f;
+
         // Direccion horizontal de la camara
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
@@ -129,6 +140,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Movimiento
         controller.Move(movement * currentSpeed * Time.deltaTime);
+
+        if (controller.isGrounded && verticalVelocity < 0f)
+            verticalVelocity = -2f;
     }
 
     private void LookCamera()

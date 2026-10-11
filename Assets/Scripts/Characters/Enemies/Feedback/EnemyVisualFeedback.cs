@@ -5,49 +5,52 @@ public class EnemyVisualFeedback
     private static readonly int BaseColorProperty = Shader.PropertyToID("_BaseColor");
     private static readonly int ColorProperty = Shader.PropertyToID("_Color");
 
-    private readonly Renderer enemyRenderer;
+    private readonly Renderer[] enemyRenderers;
     private readonly Color chasingColor;
-    private readonly MaterialPropertyBlock materialPropertyBlock;
-    private readonly Color patrolColor;
-    private readonly int colorPropertyId = -1;
 
-    public EnemyVisualFeedback(Renderer enemyRenderer, Color chasingColor)
+    public EnemyVisualFeedback(Renderer[] enemyRenderers, Color chasingColor)
     {
-        this.enemyRenderer = enemyRenderer;
+        this.enemyRenderers = enemyRenderers;
         this.chasingColor = chasingColor;
-
-        Material sharedMaterial = enemyRenderer != null ? enemyRenderer.sharedMaterial : null;
-        if (sharedMaterial == null)
-        {
-            return;
-        }
-
-        if (sharedMaterial.HasProperty(BaseColorProperty))
-        {
-            colorPropertyId = BaseColorProperty;
-        }
-        else if (sharedMaterial.HasProperty(ColorProperty))
-        {
-            colorPropertyId = ColorProperty;
-        }
-        else
-        {
-            return;
-        }
-
-        patrolColor = sharedMaterial.GetColor(colorPropertyId);
-        materialPropertyBlock = new MaterialPropertyBlock();
     }
 
     public void Apply(bool isChasing)
     {
-        if (enemyRenderer == null || materialPropertyBlock == null || colorPropertyId < 0)
+        if (enemyRenderers == null)
         {
             return;
         }
 
-        enemyRenderer.GetPropertyBlock(materialPropertyBlock);
-        materialPropertyBlock.SetColor(colorPropertyId, isChasing ? chasingColor : patrolColor);
-        enemyRenderer.SetPropertyBlock(materialPropertyBlock);
+        foreach (Renderer renderer in enemyRenderers)
+        {
+            if (renderer == null || renderer.sharedMaterial == null)
+            {
+                continue;
+            }
+
+            int colorPropertyId = renderer.sharedMaterial.HasProperty(BaseColorProperty)
+                ? BaseColorProperty
+                : renderer.sharedMaterial.HasProperty(ColorProperty)
+                    ? ColorProperty
+                    : -1;
+
+            if (colorPropertyId < 0)
+            {
+                continue;
+            }
+
+            // A cleared property block shows the material exactly as imported
+            // from the downloaded model, including its original textures.
+            if (!isChasing)
+            {
+                renderer.SetPropertyBlock(null);
+                continue;
+            }
+
+            MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+            renderer.GetPropertyBlock(propertyBlock);
+            propertyBlock.SetColor(colorPropertyId, chasingColor);
+            renderer.SetPropertyBlock(propertyBlock);
+        }
     }
 }

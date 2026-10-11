@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 18.147564, y: 2, z: -4.102249}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4374957040166056856}
@@ -132,20 +132,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   waypoints: []
   restrictToRoom: 1
-  roomCenter: {x: 13.147564, y: 0.6, z: -4.102249}
-  roomRadii: {x: 10.65, y: 13.25}
-  wallMargin: 0.75
-  circularPatrolRadius: 5
-  roomHeightTolerance: 2
+  roomCenter: {x: 40.43091, y: 0, z: 8.034037}
+  roomRadii: {x: 16, y: 16}
+  wallMargin: 1
+  circularPatrolRadius: 4.5
+  roomHeightTolerance: 6
   patrolMode: 0
-  patrolSpeed: 3
+  patrolSpeed: 0.9
   waypointReachedThreshold: 0.1
   waitTimeAtWaypoint: 1
-  chaseSpeed: 4
-  loseSightDelay: 2
+  chaseSpeed: 1.6
+  loseSightDelay: 8
   searchDuration: 2
-  viewRadius: 6
-  viewAngle: 90
+  viewRadius: 12
+  viewAngle: 120
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64

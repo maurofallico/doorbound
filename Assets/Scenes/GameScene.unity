@@ -4732,7 +4732,7 @@ PrefabInstance:
       objectReference: {fileID: 1588058644}
     - target: {fileID: 5214077214449445336, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_VersionIndex
-      value: 3212
+      value: 3215
       objectReference: {fileID: 0}
     - target: {fileID: 5214077214449445336, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_SelectedEdges.Array.size
@@ -15772,7 +15772,7 @@ PrefabInstance:
       objectReference: {fileID: 395452406}
     - target: {fileID: 5214077214449445336, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_VersionIndex
-      value: 3212
+      value: 3215
       objectReference: {fileID: 0}
     - target: {fileID: 6516778150918293592, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_LocalPosition.z
@@ -21629,7 +21629,7 @@ MonoBehaviour:
   CameraSide: 1
   CameraDistance: 2
   AvoidObstacles:
-    Enabled: 1
+    Enabled: 0
     CollisionFilter:
       serializedVersion: 2
       m_Bits: 64
@@ -24007,7 +24007,7 @@ PrefabInstance:
       objectReference: {fileID: 461001759}
     - target: {fileID: 5214077214449445336, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_VersionIndex
-      value: 3212
+      value: 3215
       objectReference: {fileID: 0}
     - target: {fileID: 5214077214449445336, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_SelectedEdges.Array.size
@@ -61455,8 +61455,8 @@ CharacterController:
   serializedVersion: 3
   m_Height: 1.8
   m_Radius: 0.4
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_SlopeLimit: 60
+  m_StepOffset: 0.5
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -68844,7 +68844,7 @@ PrefabInstance:
       objectReference: {fileID: 854957408}
     - target: {fileID: 5214077214449445336, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_VersionIndex
-      value: 3218
+      value: 3221
       objectReference: {fileID: 0}
     - target: {fileID: 5214077214449445336, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_SelectedEdges.Array.size

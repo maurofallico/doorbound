@@ -32,18 +32,24 @@ public class LockedDoor : MonoBehaviour, IInteractable
 
         isOpen = startsOpen;
         isUnlocked = !requiresKey;
+
     }
 
     private void Start()
     {
-        if (animator == null)
-            return;
+        if (animator != null)
+        {
+            animator.Play(
+                isOpen ? openStateName : closeStateName,
+                0,
+                1f
+            );
+        }
 
-        animator.Play(
-            isOpen ? openStateName : closeStateName,
-            0,
-            1f
-        );
+        // Only the red door has both references assigned in GameScene. Create
+        // its encounter immediately; the pink victory door has no prefab here.
+        if (prefabToSpawnOnOpen != null && spawnPoint != null)
+            SpawnEnemy();
     }
 
     public void Interact(PlayerInventory playerInventory)
@@ -62,17 +68,13 @@ public class LockedDoor : MonoBehaviour, IInteractable
         }
 
         isOpen = !isOpen;
-        if (isOpen)
-        {
-            SpawnOnOpen();
-        }
         if (animator != null)
         {
             animator.SetTrigger(isOpen ? openTrigger : closeTrigger);
         }
     }
 
-    private void SpawnOnOpen()
+    private void SpawnEnemy()
     {
         if (spawnOnlyOnce && hasSpawned) return;
         if (prefabToSpawnOnOpen == null || spawnPoint == null) return;

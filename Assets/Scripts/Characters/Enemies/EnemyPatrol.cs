@@ -4,6 +4,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyPatrol : MonoBehaviour
 {
+    private const string OriginalDiffuseResource = "Enemy/pumpkinHulk_diffuse";
     public enum State { Patrolling, Searching, Chasing }
     private State currentState = State.Patrolling;
 
@@ -75,7 +76,11 @@ public class EnemyPatrol : MonoBehaviour
         patrolStrategy = CreatePatrolStrategy();
         mover = new EnemyMove(agent, rotateTowardsMovement);
         vision = new EnemyVision(transform, roomBounds, viewRadius, viewAngle, obstacleMask);
-        visualFeedback = new EnemyVisualFeedback(enemyRenderer, chasingColor);
+        ApplyOriginalTexture();
+        visualFeedback = new EnemyVisualFeedback(
+            GetComponentsInChildren<Renderer>(true),
+            chasingColor
+        );
         contactHandler = new PlayerContactHandler(playerTag);
         ApplyStateColor();
 
@@ -83,6 +88,27 @@ public class EnemyPatrol : MonoBehaviour
         if (playerObj != null)
         {
             playerTransform = playerObj.transform;
+        }
+
+        // The circular room's NavMesh edge is inaccurate in this level and
+        // places agents against a wall. Keep this encounter in its real centre
+        // and move it directly inside its safe circular bounds instead.
+        if (restrictToRoom)
+        {
+            float floorY = transform.position.y;
+            if (NavMesh.SamplePosition(roomCenter, out NavMeshHit hit, 30f, NavMesh.AllAreas))
+            {
+                floorY = hit.position.y;
+            }
+
+            agent.enabled = false;
+
+            // Start on the patrol ring, not on top of the player standing near
+            // the room centre. This makes the enemy immediately visible.
+            Vector3 initialPatrolPosition = roomCenter + Vector3.right * circularPatrolRadius;
+            transform.position = new Vector3(initialPatrolPosition.x, floorY, initialPatrolPosition.z);
+            spawnPosition = transform.position;
+            patrolStrategy = CreatePatrolStrategy();
         }
     }
 
@@ -110,7 +136,10 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (!defeatPending) return;
 
-        agent.ResetPath();
+        if (agent.enabled && agent.isOnNavMesh)
+        {
+            agent.ResetPath();
+        }
         enabled = false;
         if (GameManager.Instance != null)
         {
@@ -142,6 +171,16 @@ public class EnemyPatrol : MonoBehaviour
         patrolStrategy = CreatePatrolStrategy();
     }
 
+    public void ConfigureUnrestrictedPatrol(float patrolRadius)
+    {
+        restrictToRoom = false;
+        circularPatrolRadius = patrolRadius;
+        spawnPosition = transform.position;
+        roomBounds = new RoomBounds(false, roomCenter, roomRadii, wallMargin, roomHeightTolerance);
+        vision = new EnemyVision(transform, roomBounds, viewRadius, viewAngle, obstacleMask);
+        patrolStrategy = CreatePatrolStrategy();
+    }
+
     private bool HasWaypoints()
     {
         if (waypoints == null) return false;
@@ -159,6 +198,17 @@ public class EnemyPatrol : MonoBehaviour
 
     private void DetectPlayer()
     {
+        // This encounter is confined to the circular room. Once the player
+        // enters it, the enemy keeps pursuing them until they leave it.
+        // This avoids losing the player because of the room pillars or a
+        // momentary raycast obstruction.
+        if (restrictToRoom && playerTransform != null && roomBounds.Contains(playerTransform.position))
+        {
+            SetState(State.Chasing);
+            loseSightTimer = loseSightDelay;
+            return;
+        }
+
         EnemyDetectionResult result = vision.Detect(playerTransform, currentState == State.Chasing);
         if (result == EnemyDetectionResult.NoPlayer)
         {
@@ -167,6 +217,14 @@ public class EnemyPatrol : MonoBehaviour
 
         if (result == EnemyDetectionResult.OutsideRoom)
         {
+            // Keep moving toward the exit for a short moment instead of
+            // instantly forgetting the player right at the room boundary.
+            if (restrictToRoom && currentState == State.Chasing && loseSightTimer > 0f)
+            {
+                loseSightTimer -= Time.deltaTime;
+                return;
+            }
+
             loseSightTimer = 0f;
             SetState(State.Patrolling);
             return;
@@ -179,6 +237,13 @@ public class EnemyPatrol : MonoBehaviour
         }
         else if (currentState == State.Chasing)
         {
+            // In the circular encounter, detection starts a chase that lasts
+            // until the player leaves the room, even behind a pillar.
+            if (restrictToRoom)
+            {
+                return;
+            }
+
             loseSightTimer -= Time.deltaTime;
             if (loseSightTimer <= 0f)
             {
@@ -192,6 +257,34 @@ public class EnemyPatrol : MonoBehaviour
             if (searchTimer <= 0f)
             {
                 SetState(State.Patrolling);
+            }
+        }
+    }
+
+    private void ApplyOriginalTexture()
+    {
+        Texture2D diffuseTexture = Resources.Load<Texture2D>(OriginalDiffuseResource);
+        if (diffuseTexture == null)
+        {
+            Debug.LogWarning("Enemy texture was not found at Resources/Enemy/pumpkinHulk_diffuse.", this);
+            return;
+        }
+
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>(true))
+        {
+            foreach (Material material in renderer.materials)
+            {
+                if (material == null) continue;
+
+                if (material.HasProperty("_BaseMap"))
+                {
+                    material.SetTexture("_BaseMap", diffuseTexture);
+                }
+
+                if (material.HasProperty("_MainTex"))
+                {
+                    material.SetTexture("_MainTex", diffuseTexture);
+                }
             }
         }
     }
@@ -214,7 +307,10 @@ public class EnemyPatrol : MonoBehaviour
 
     private void SearchForPlayer()
     {
-        mover.Stop();
+        if (!restrictToRoom)
+        {
+            mover.Stop();
+        }
         transform.Rotate(0f, 90f * Time.deltaTime, 0f);
     }
 
@@ -261,7 +357,32 @@ public class EnemyPatrol : MonoBehaviour
 
     private void MoveTowardsTarget(Vector3 targetPosition, float speed)
     {
-        mover.MoveTowards(roomBounds.ClampTarget(targetPosition), speed);
+        Vector3 target = roomBounds.ClampTarget(targetPosition);
+
+        if (restrictToRoom)
+        {
+            target.y = transform.position.y;
+            Vector3 direction = target - transform.position;
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude <= 0.0001f)
+            {
+                return;
+            }
+
+            transform.position += direction.normalized * speed * Time.deltaTime;
+            if (rotateTowardsMovement)
+            {
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    Quaternion.LookRotation(direction),
+                    12f * Time.deltaTime
+                );
+            }
+            return;
+        }
+
+        mover.MoveTowards(target, speed);
     }
 
     private void SetState(State nextState)
