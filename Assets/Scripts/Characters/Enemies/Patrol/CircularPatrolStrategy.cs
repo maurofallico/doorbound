@@ -1,34 +1,26 @@
 using UnityEngine;
 
-public class CircularPatrolStrategy : IPatrolStrategy
+public class CircularPatrolStrategy
 {
-    private readonly Vector3 roomCenter;
-    private readonly float patrolRadius;
+    private const int PointCount = 8;
+
+    private readonly EnemyRoom room;
+    private readonly float patrolSize;
 
     private int circularWaypoint = 0;
 
     public CircularPatrolStrategy(
-        Vector3 roomCenter,
-        float patrolRadius
+        EnemyRoom room,
+        float patrolSize
     )
     {
-        this.roomCenter = roomCenter;
-        this.patrolRadius = patrolRadius;
+        this.room = room;
+        this.patrolSize = patrolSize;
     }
 
-    public bool HasTarget => true;
-
-    public Vector3 GetTarget(Vector3 currentPosition)
+    public Vector3 GetTarget()
     {
-        float angle =
-            circularWaypoint * Mathf.PI / 4f;
-
-        return roomCenter +
-            new Vector3(
-                Mathf.Cos(angle),
-                0f,
-                Mathf.Sin(angle)
-            ) * patrolRadius;
+        return room.GetPatrolPoint(circularWaypoint, PointCount, patrolSize);
     }
 
     public bool HasReachedTarget(
@@ -37,7 +29,7 @@ public class CircularPatrolStrategy : IPatrolStrategy
     )
     {
         Vector3 remaining =
-            GetTarget(currentPosition) - currentPosition;
+            GetTarget() - currentPosition;
 
         remaining.y = 0f;
 
@@ -48,22 +40,19 @@ public class CircularPatrolStrategy : IPatrolStrategy
     public void Advance()
     {
         circularWaypoint =
-            (circularWaypoint + 1) % 8;
+            (circularWaypoint + 1) % PointCount;
     }
 
     public void SetClosestNextWaypoint(
         Vector3 currentPosition
     )
     {
-        Vector3 offset =
-            currentPosition - roomCenter;
-
         circularWaypoint =
             (
                 Mathf.RoundToInt(
-                    Mathf.Atan2(offset.z, offset.x)
-                    / (Mathf.PI / 4f)
-                ) + 9
-            ) % 8;
+                    room.GetAngle(currentPosition)
+                    / (Mathf.PI * 2f / PointCount)
+                ) + PointCount + 1
+            ) % PointCount;
     }
 }

@@ -4,38 +4,39 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyPatrol : MonoBehaviour
 {
-    private enum State { Patrolling, Chasing }
+    private enum State { Patrolling, Investigating, Observing, Chasing }
     private State currentState = State.Patrolling;
 
-    private enum PatrolMode
-    {
-        Loop,
-        PingPong
-    }
+    [Header("Patrol")]
+    [Range(0.1f, 1f)]
+    [SerializeField] private float patrolSize = 0.5f;
+    [SerializeField] private float patrolSpeed = 2.5f;
+    [SerializeField] private float waypointReachedThreshold = 0.5f;
+    [SerializeField] private float waitTimeAtWaypoint = 0.5f;
+    [SerializeField] private float chaseSpeed = 4.5f;
 
-    [SerializeField] private Transform[] waypoints;
-
-    [Header("Circular Room")]
-    [SerializeField] private bool restrictToRoom;
-    [SerializeField] private Vector3 roomCenter;
-    [SerializeField] private Vector2 roomRadii = new Vector2(10.65f, 13.25f);
-    [SerializeField] private float wallMargin = 0.75f;
-    [SerializeField] private float circularPatrolRadius = 5f;
-    [SerializeField] private float roomHeightTolerance = 2f;
-
-    [SerializeField] private PatrolMode patrolMode = PatrolMode.PingPong;
-    [SerializeField] private float patrolSpeed = 2f;
-    [SerializeField] private float waypointReachedThreshold = 0.1f;
-    [SerializeField] private float waitTimeAtWaypoint = 0f;
-    [SerializeField] private float chaseSpeed = 3.5f;
-
-    [SerializeField] private float loseSightDelay = 2f;
-    [SerializeField] private float viewRadius = 6f;
+    [Header("Vision")]
+    [SerializeField] private float loseSightDelay = 3f;
+    [SerializeField] private float viewRadius = 12f;
 
     [Range(0, 360)]
-    [SerializeField] private float viewAngle = 90f;
+    [SerializeField] private float viewAngle = 120f;
 
     [SerializeField] private LayerMask obstacleMask;
+    [SerializeField] private float playerTargetHeight = 1f;
+
+    [Header("Observation")]
+    [SerializeField] private float observeDuration = 0.75f;
+    [SerializeField] private float observeTurnSpeed = 8f;
+    [SerializeField] private float instantChaseDistance = 4f;
+
+    [Header("Hearing")]
+    [SerializeField] private float hearingRadius = 8f;
+    [SerializeField] private float investigateSpeed = 2.5f;
+    [SerializeField] private float investigateReachedThreshold = 0.5f;
+    [SerializeField] private float investigateWaitTime = 2f;
+    [SerializeField] private float noiseSampleDistance = 2f;
+
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private bool rotateTowardsMovement = true;
 
@@ -47,30 +48,40 @@ public class EnemyPatrol : MonoBehaviour
     private bool isWaiting = false;
     private Transform playerTransform;
     private NavMeshAgent agent;
-    private Vector3 spawnPosition;
     private float loseSightTimer = 0f;
+    private float observeTimer = 0f;
+    private Vector3 investigatePosition;
+    private Vector3 lastKnownPlayerPosition;
     private bool defeatPending;
 
-    private IPatrolStrategy patrolStrategy;
-    private RoomBounds roomBounds;
+    private CircularPatrolStrategy patrolStrategy;
+    private EnemyRoom room;
     private EnemyMove mover;
     private EnemyVision vision;
+    private EnemyHearing hearing;
     private EnemyVisualFeedback visualFeedback;
     private PlayerContactHandler contactHandler;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        spawnPosition = transform.position;
         if (enemyRenderer == null)
         {
             enemyRenderer = GetComponent<Renderer>();
         }
 
-        roomBounds = new RoomBounds(restrictToRoom, roomCenter, roomRadii, wallMargin, roomHeightTolerance);
-        patrolStrategy = CreatePatrolStrategy();
+        room = FindFirstObjectByType<EnemyRoom>();
+        if (room == null)
+        {
+            Debug.LogError("No hay ningun objeto con EnemyRoom en la escena, por lo que el enemigo no puede patrullar.", this);
+            enabled = false;
+            return;
+        }
+
+        patrolStrategy = new CircularPatrolStrategy(room, patrolSize);
         mover = new EnemyMove(agent, rotateTowardsMovement);
-        vision = new EnemyVision(transform, roomBounds, viewRadius, viewAngle, obstacleMask);
+        vision = new EnemyVision(transform, room, viewRadius, viewAngle, obstacleMask, playerTargetHeight);
+        hearing = new EnemyHearing(transform, room, hearingRadius);
         visualFeedback = new EnemyVisualFeedback(enemyRenderer, chasingColor);
         contactHandler = new PlayerContactHandler(playerTag);
         ApplyStateColor();
@@ -82,19 +93,44 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (!agent.isOnNavMesh)
+        {
+            Debug.LogWarning($"{name} no esta sobre un NavMesh en {transform.position} y no se va a mover", this);
+        }
+    }
+
+    private void OnEnable()
+    {
+        NoiseEvents.NoiseEmitted += HandleNoise;
+    }
+
+    private void OnDisable()
+    {
+        NoiseEvents.NoiseEmitted -= HandleNoise;
+    }
+
     private void Update()
     {
         if (defeatPending) return;
 
         DetectPlayer();
 
-        if (currentState == State.Chasing)
+        switch (currentState)
         {
-            ChasePlayer();
-        }
-        else
-        {
-            Patrol();
+            case State.Chasing:
+                ChasePlayer();
+                break;
+            case State.Observing:
+                ObservePlayer();
+                break;
+            case State.Investigating:
+                Investigate();
+                break;
+            default:
+                Patrol();
+                break;
         }
     }
 
@@ -112,43 +148,6 @@ public class EnemyPatrol : MonoBehaviour
         Cursor.visible = true;
     }
 
-    private IPatrolStrategy CreatePatrolStrategy()
-    {
-        if (restrictToRoom)
-        {
-            return new CircularPatrolStrategy(roomCenter, circularPatrolRadius);
-        }
-
-        if (HasWaypoints())
-        {
-            return new WaypointPatrolStrategy(waypoints, patrolMode == PatrolMode.PingPong);
-        }
-
-        return new NavMeshPatrolStrategy(spawnPosition, circularPatrolRadius);
-    }
-
-    public void SetWaypoints(Transform[] newWaypoints)
-    {
-        waypoints = newWaypoints;
-        restrictToRoom = false;
-        patrolStrategy = CreatePatrolStrategy();
-    }
-
-    private bool HasWaypoints()
-    {
-        if (waypoints == null) return false;
-
-        for (int i = 0; i < waypoints.Length; i++)
-        {
-            if (waypoints[i] != null)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void DetectPlayer()
     {
         EnemyDetectionResult result = vision.Detect(playerTransform, currentState == State.Chasing);
@@ -157,31 +156,131 @@ public class EnemyPatrol : MonoBehaviour
             return;
         }
 
+        if (result == EnemyDetectionResult.Visible)
+        {
+            lastKnownPlayerPosition = playerTransform.position;
+        }
+
+        if (currentState == State.Chasing)
+        {
+            if (result == EnemyDetectionResult.Visible)
+            {
+                loseSightTimer = loseSightDelay;
+                return;
+            }
+
+            loseSightTimer -= Time.deltaTime;
+            if (loseSightTimer <= 0f)
+            {
+                SearchLastKnownPosition();
+            }
+            return;
+        }
+
         if (result == EnemyDetectionResult.OutsideRoom)
         {
-            loseSightTimer = 0f;
-            SetState(State.Patrolling);
+            if (currentState == State.Observing)
+            {
+                SearchLastKnownPosition();
+            }
             return;
         }
 
         if (result == EnemyDetectionResult.Visible)
         {
-            SetState(State.Chasing);
-            loseSightTimer = loseSightDelay;
-        }
-        else if (currentState == State.Chasing)
-        {
-            loseSightTimer -= Time.deltaTime;
-            if (loseSightTimer <= 0f)
+            if (Vector3.Distance(transform.position, playerTransform.position) <= instantChaseDistance)
             {
-                SetState(State.Patrolling);
+                loseSightTimer = loseSightDelay;
+                SetState(State.Chasing);
             }
+            else if (currentState != State.Observing)
+            {
+                observeTimer = 0f;
+                SetState(State.Observing);
+            }
+        }
+        else if (currentState == State.Observing)
+        {
+            SearchLastKnownPosition();
         }
     }
 
-    private Vector3 GetFacingDirection()
+    private void SearchLastKnownPosition()
     {
-        return transform.forward;
+        if (!NavMesh.SamplePosition(lastKnownPlayerPosition, out NavMeshHit hit, noiseSampleDistance, NavMesh.AllAreas))
+        {
+            SetState(State.Patrolling);
+            return;
+        }
+
+        investigatePosition = hit.position;
+        SetState(State.Investigating);
+    }
+
+    private void HandleNoise(Vector3 noisePosition, float loudness)
+    {
+        if (defeatPending || currentState == State.Observing || currentState == State.Chasing)
+        {
+            return;
+        }
+
+        if (!hearing.CanHear(noisePosition, loudness))
+        {
+            return;
+        }
+
+        if (!NavMesh.SamplePosition(noisePosition, out NavMeshHit hit, noiseSampleDistance, NavMesh.AllAreas))
+        {
+            return;
+        }
+
+        investigatePosition = hit.position;
+        isWaiting = false;
+        SetState(State.Investigating);
+    }
+
+    private void ObservePlayer()
+    {
+        if (playerTransform == null)
+        {
+            SetState(State.Patrolling);
+            return;
+        }
+
+        mover.Stop();
+        mover.FaceTowards(playerTransform.position, observeTurnSpeed);
+
+        observeTimer += Time.deltaTime;
+        visualFeedback.Apply(observeDuration > 0f ? observeTimer / observeDuration : 1f);
+
+        if (observeTimer >= observeDuration)
+        {
+            loseSightTimer = loseSightDelay;
+            SetState(State.Chasing);
+        }
+    }
+
+    private void Investigate()
+    {
+        if (isWaiting)
+        {
+            waitTimer -= Time.deltaTime;
+            if (waitTimer <= 0f)
+            {
+                SetState(State.Patrolling);
+            }
+            return;
+        }
+
+        MoveTowardsTarget(investigatePosition, investigateSpeed);
+
+        if (!mover.HasArrived(investigateReachedThreshold))
+        {
+            return;
+        }
+
+        isWaiting = true;
+        waitTimer = investigateWaitTime;
     }
 
     private void ChasePlayer()
@@ -197,11 +296,6 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Patrol()
     {
-        if (patrolStrategy == null || !patrolStrategy.HasTarget)
-        {
-            return;
-        }
-
         if (isWaiting)
         {
             waitTimer -= Time.deltaTime;
@@ -212,17 +306,10 @@ public class EnemyPatrol : MonoBehaviour
             return;
         }
 
-        Vector3 target = patrolStrategy.GetTarget(transform.position);
-        bool reachedTarget = !restrictToRoom && patrolStrategy.HasReachedTarget(transform.position, waypointReachedThreshold);
+        MoveTowardsTarget(patrolStrategy.GetTarget(), patrolSpeed);
 
-        MoveTowardsTarget(target, patrolSpeed);
-
-        if (restrictToRoom)
-        {
-            reachedTarget = patrolStrategy.HasReachedTarget(transform.position, waypointReachedThreshold);
-        }
-
-        if (!reachedTarget)
+        if (!patrolStrategy.HasReachedTarget(transform.position, waypointReachedThreshold) &&
+            !mover.HasArrived(waypointReachedThreshold))
         {
             return;
         }
@@ -238,7 +325,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private void MoveTowardsTarget(Vector3 targetPosition, float speed)
     {
-        mover.MoveTowards(roomBounds.ClampTarget(targetPosition), speed);
+        mover.MoveTowards(room.ClampTarget(targetPosition), speed);
     }
 
     private void SetState(State nextState)
@@ -249,21 +336,17 @@ public class EnemyPatrol : MonoBehaviour
         }
 
         currentState = nextState;
-        if (restrictToRoom && nextState == State.Patrolling && patrolStrategy is CircularPatrolStrategy circularPatrol)
+        isWaiting = false;
+        if (nextState == State.Patrolling)
         {
-            circularPatrol.SetClosestNextWaypoint(transform.position);
+            patrolStrategy.SetClosestNextWaypoint(transform.position);
         }
         ApplyStateColor();
     }
 
-    private bool IsInsideRoom(Vector3 position)
-    {
-        return roomBounds.Contains(position);
-    }
-
     private void ApplyStateColor()
     {
-        visualFeedback.Apply(currentState == State.Chasing);
+        visualFeedback.Apply(currentState == State.Chasing ? 1f : 0f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -283,7 +366,7 @@ public class EnemyPatrol : MonoBehaviour
 
     public void HandlePlayerContact(GameObject other)
     {
-        if (defeatPending) return;
+        if (defeatPending || room == null) return;
 
         if (contactHandler.IsPlayerContact(other))
         {
@@ -293,44 +376,19 @@ public class EnemyPatrol : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (restrictToRoom)
-        {
-            Vector3 previous = roomCenter + Vector3.right * roomRadii.x;
-            Gizmos.color = Color.green;
-            for (int i = 1; i <= 64; i++)
-            {
-                float angle = i * Mathf.PI * 2f / 64f;
-                Vector3 next = roomCenter + new Vector3(Mathf.Cos(angle) * roomRadii.x, 0f, Mathf.Sin(angle) * roomRadii.y);
-                Gizmos.DrawLine(previous, next);
-                previous = next;
-            }
-        }
-
-        if (!restrictToRoom && waypoints != null && waypoints.Length > 0)
-        {
-            Gizmos.color = Color.red;
-            for (int i = 0; i < waypoints.Length; i++)
-            {
-                if (waypoints[i] == null) continue;
-                Gizmos.DrawSphere(waypoints[i].position, 0.15f);
-
-                Transform next = waypoints[(i + 1) % waypoints.Length];
-                if (next != null)
-                {
-                    Gizmos.DrawLine(waypoints[i].position, next.position);
-                }
-            }
-        }
-
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, viewRadius);
 
-        Vector3 facing = Application.isPlaying
-            ? GetFacingDirection()
-            : transform.forward;
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, hearingRadius);
 
-        Vector3 leftBoundary = Quaternion.Euler(0, viewAngle / 2f, 0) * facing;
-        Vector3 rightBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * facing;
+        if (Application.isPlaying && currentState == State.Investigating)
+        {
+            Gizmos.DrawSphere(investigatePosition, 0.2f);
+        }
+
+        Vector3 leftBoundary = Quaternion.Euler(0, viewAngle / 2f, 0) * transform.forward;
+        Vector3 rightBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * transform.forward;
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary * viewRadius);

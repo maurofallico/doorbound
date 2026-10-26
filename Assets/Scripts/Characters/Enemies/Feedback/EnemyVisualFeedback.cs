@@ -39,7 +39,7 @@ public class EnemyVisualFeedback
         materialPropertyBlock = new MaterialPropertyBlock();
     }
 
-    public void Apply(bool isChasing)
+    public void Apply(float alert)
     {
         if (enemyRenderer == null || materialPropertyBlock == null || colorPropertyId < 0)
         {
@@ -47,7 +47,7 @@ public class EnemyVisualFeedback
         }
 
         enemyRenderer.GetPropertyBlock(materialPropertyBlock);
-        materialPropertyBlock.SetColor(colorPropertyId, isChasing ? chasingColor : patrolColor);
+        materialPropertyBlock.SetColor(colorPropertyId, Color.Lerp(patrolColor, chasingColor, alert));
         enemyRenderer.SetPropertyBlock(materialPropertyBlock);
     }
 }
