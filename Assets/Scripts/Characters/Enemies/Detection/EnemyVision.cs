@@ -11,18 +11,20 @@ public enum EnemyDetectionResult
 public class EnemyVision
 {
     private readonly Transform transform;
-    private readonly RoomBounds roomBounds;
+    private readonly EnemyRoom room;
     private readonly float viewRadius;
     private readonly float viewAngle;
     private readonly LayerMask obstacleMask;
+    private readonly float playerTargetHeight;
 
-    public EnemyVision(Transform transform, RoomBounds roomBounds, float viewRadius, float viewAngle, LayerMask obstacleMask)
+    public EnemyVision(Transform transform, EnemyRoom room, float viewRadius, float viewAngle, LayerMask obstacleMask, float playerTargetHeight)
     {
         this.transform = transform;
-        this.roomBounds = roomBounds;
+        this.room = room;
         this.viewRadius = viewRadius;
         this.viewAngle = viewAngle;
         this.obstacleMask = obstacleMask;
+        this.playerTargetHeight = playerTargetHeight;
     }
 
     public EnemyDetectionResult Detect(Transform playerTransform, bool isChasing)
@@ -32,15 +34,15 @@ public class EnemyVision
             return EnemyDetectionResult.NoPlayer;
         }
 
-        if (roomBounds.IsEnabled && !roomBounds.Contains(playerTransform.position))
+        if (!room.Contains(playerTransform.position))
         {
             return EnemyDetectionResult.OutsideRoom;
         }
 
-        Vector3 dirToPlayer = playerTransform.position - transform.position;
+        Vector3 dirToPlayer = playerTransform.position + Vector3.up * playerTargetHeight - transform.position;
         float distanceToPlayer = dirToPlayer.magnitude;
 
-        if (!roomBounds.IsEnabled && distanceToPlayer > viewRadius)
+        if (distanceToPlayer > viewRadius)
         {
             return EnemyDetectionResult.Hidden;
         }
@@ -48,7 +50,7 @@ public class EnemyVision
         Vector3 horizontalDirectionToPlayer = dirToPlayer;
         horizontalDirectionToPlayer.y = 0f;
         float angleToPlayer = Vector3.Angle(transform.forward, horizontalDirectionToPlayer);
-        bool isInsideViewAngle = roomBounds.IsEnabled || isChasing || angleToPlayer <= viewAngle / 2f;
+        bool isInsideViewAngle = isChasing || angleToPlayer <= viewAngle / 2f;
 
         if (!isInsideViewAngle)
         {
@@ -58,11 +60,13 @@ public class EnemyVision
         bool hitSomething = Physics.Raycast(
             transform.position,
             dirToPlayer.normalized,
-            out _,
+            out RaycastHit hit,
             distanceToPlayer,
-            obstacleMask
+            obstacleMask,
+            QueryTriggerInteraction.Ignore
         );
 
-        return hitSomething ? EnemyDetectionResult.Hidden : EnemyDetectionResult.Visible;
+        bool blocked = hitSomething && !hit.transform.IsChildOf(playerTransform);
+        return blocked ? EnemyDetectionResult.Hidden : EnemyDetectionResult.Visible;
     }
 }

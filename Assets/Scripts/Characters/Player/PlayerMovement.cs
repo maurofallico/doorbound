@@ -7,12 +7,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
     private float verticalVelocity;
 
-    // MOVEMENT
     [SerializeField] private float walkSpeed = 1.5f;
     [SerializeField] private float runSpeed = 3.2f;
     [SerializeField] private float rotationSpeed = 10f;
 
-    // CAMERA
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform cameraPivot;
 
@@ -20,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float minPitch = -15f;
     [SerializeField] private float maxPitch = 20f;
 
-    // CROUCHING
     [SerializeField] private float standingHeight = 1.8f;
     [SerializeField] private float crouchingHeight = 1.0f;
 
@@ -39,6 +36,11 @@ public class PlayerMovement : MonoBehaviour
     private bool crouchInput;
     private float yaw;
     private float pitch;
+
+    public bool IsMoving => moveInput.sqrMagnitude > 0.01f;
+    public bool IsRunning => isRunning;
+    public bool IsCrouching => isCrouching;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -92,7 +94,6 @@ public class PlayerMovement : MonoBehaviour
     {
         float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
-        // Direccion horizontal de la camara
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
 
@@ -102,14 +103,12 @@ public class PlayerMovement : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        // Movimiento relativo a la camara
         Vector3 movement =
             forward * moveInput.y +
             right * moveInput.x;
 
         movement = Vector3.ClampMagnitude(movement, 1f);
 
-        // El personaje SOLO rota mientras se esta moviendo
         if (movement.sqrMagnitude > 0.01f)
         {
 
@@ -123,11 +122,9 @@ public class PlayerMovement : MonoBehaviour
 
             transform.rotation = newRotation;
         }
-        // Gravedad
         verticalVelocity += gravity * Time.deltaTime;
         movement.y = verticalVelocity;
 
-        // Movimiento
         controller.Move(movement * currentSpeed * Time.deltaTime);
     }
 
@@ -175,11 +172,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateAnimations()
     {
-        bool isMoving = moveInput.sqrMagnitude > 0.01f;
-
         float moveAmount = 0f;
 
-        if (isMoving)
+        if (IsMoving)
         {
             moveAmount = isRunning ? 1f : 0.5f;
         }
