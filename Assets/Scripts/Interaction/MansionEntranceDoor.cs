@@ -7,7 +7,7 @@ public class MansionEntranceDoor : MonoBehaviour, IInteractable
     [SerializeField] private float openSpeed = 1f;
 
     private Quaternion closedRotation;
-    private Quaternion openRotation;
+    private Vector3 leafOffset;
     private Coroutine moveRoutine;
     private bool isOpen;
 
@@ -16,15 +16,22 @@ public class MansionEntranceDoor : MonoBehaviour, IInteractable
     private void Awake()
     {
         closedRotation = transform.localRotation;
-        openRotation = closedRotation * Quaternion.Euler(0f, openAngle, 0f);
+        leafOffset = DoorSwing.LeafOffset(transform);
     }
 
     public void Interact(PlayerInventory playerInventory)
     {
         isOpen = !isOpen;
 
+        Quaternion target = closedRotation;
+        if (isOpen)
+        {
+            float angle = DoorSwing.AngleAwayFrom(transform.position, leafOffset, playerInventory.transform.position, Mathf.Abs(openAngle));
+            target = closedRotation * Quaternion.Euler(0f, angle, 0f);
+        }
+
         if (moveRoutine != null) StopCoroutine(moveRoutine);
-        moveRoutine = StartCoroutine(Rotate(isOpen ? openRotation : closedRotation));
+        moveRoutine = StartCoroutine(Rotate(target));
     }
 
     private IEnumerator Rotate(Quaternion target)

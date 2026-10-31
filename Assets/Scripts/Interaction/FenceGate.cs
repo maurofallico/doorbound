@@ -5,18 +5,18 @@ public class FenceGate : MonoBehaviour, IInteractable
 {
     [SerializeField] private Transform leftHinge;
     [SerializeField] private Transform rightHinge;
-    [SerializeField] private float leftOpenAngle = -90f;
-    [SerializeField] private float rightOpenAngle = 90f;
+    [SerializeField] private Transform insideMarker;
+    [SerializeField] private float openAngle = 90f;
     [SerializeField] private float openSpeed = 1f;
     [SerializeField] private float slamSpeed = 4f;
     [SerializeField] private string requiredKeyId = "llave_salida";
 
     private Quaternion leftClosed;
     private Quaternion rightClosed;
+    private Vector3 leftLeafOffset;
+    private Vector3 rightLeafOffset;
     private Coroutine moveRoutine;
-
     private bool isOpen;
-    private bool isLocked;
 
     public string Prompt => "";
 
@@ -24,34 +24,55 @@ public class FenceGate : MonoBehaviour, IInteractable
     {
         leftClosed = leftHinge.localRotation;
         rightClosed = rightHinge.localRotation;
+        leftLeafOffset = DoorSwing.LeafOffset(leftHinge);
+        rightLeafOffset = DoorSwing.LeafOffset(rightHinge);
     }
 
     public void Interact(PlayerInventory playerInventory)
     {
-        if (isLocked)
+        if (isOpen)
         {
-            if (!playerInventory.HasKey(requiredKeyId)) return;
-            isLocked = false;
+            Close(openSpeed);
+            return;
         }
 
-        SetOpen(!isOpen, openSpeed);
+        Vector3 playerPosition = playerInventory.transform.position;
+
+        if (IsInside(playerPosition) && !playerInventory.HasKey(requiredKeyId)) return;
+
+        isOpen = true;
+        float leftAngle = DoorSwing.AngleAwayFrom(leftHinge.position, leftLeafOffset, playerPosition, openAngle);
+        float rightAngle = DoorSwing.AngleAwayFrom(rightHinge.position, rightLeafOffset, playerPosition, openAngle);
+        MoveTo(leftClosed * Quaternion.Euler(0f, leftAngle, 0f), rightClosed * Quaternion.Euler(0f, rightAngle, 0f), openSpeed);
     }
 
-    public void SlamAndLock()
+    public void SlamShut()
     {
-        if (isLocked || !isOpen) return;
+        if (!isOpen) return;
 
-        isLocked = true;
-        SetOpen(false, slamSpeed);
+        Close(slamSpeed);
     }
 
-    private void SetOpen(bool open, float speed)
+    private void Close(float speed)
     {
-        isOpen = open;
+        isOpen = false;
+        MoveTo(leftClosed, rightClosed, speed);
+    }
 
-        Quaternion leftTarget = open ? leftClosed * Quaternion.Euler(0f, leftOpenAngle, 0f) : leftClosed;
-        Quaternion rightTarget = open ? rightClosed * Quaternion.Euler(0f, rightOpenAngle, 0f) : rightClosed;
+    private bool IsInside(Vector3 position)
+    {
+        if (insideMarker == null) return false;
 
+        Vector3 center = (leftHinge.position + rightHinge.position) * 0.5f;
+        Vector3 inward = insideMarker.position - center;
+        inward.y = 0f;
+        Vector3 toPlayer = position - center;
+        toPlayer.y = 0f;
+        return Vector3.Dot(inward, toPlayer) > 0f;
+    }
+
+    private void MoveTo(Quaternion leftTarget, Quaternion rightTarget, float speed)
+    {
         if (moveRoutine != null) StopCoroutine(moveRoutine);
         moveRoutine = StartCoroutine(Rotate(leftTarget, rightTarget, speed));
     }

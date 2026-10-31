@@ -14,6 +14,6 @@ public class FenceGateTrigger : MonoBehaviour
     {
         if (gate == null || !other.CompareTag("Player")) return;
 
-        gate.SlamAndLock();
+        gate.SlamShut();
     }
 }
