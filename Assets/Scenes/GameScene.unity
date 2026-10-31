@@ -63248,6 +63248,7 @@ GameObject:
   - component: {fileID: 2055722085}
   - component: {fileID: 2055722084}
   - component: {fileID: 2055722083}
+  - component: {fileID: 2055722091}
   m_Layer: 0
   m_Name: 'Player '
   m_TagString: Player
@@ -63475,6 +63476,25 @@ Transform:
   - {fileID: 1776410118}
   m_Father: {fileID: 295293788}
   m_LocalEulerAnglesHint: {x: 0, y: -36.282, z: 0}
+--- !u!114 &2055722091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055722082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68d87a6ab20f971438c51df05a02c9b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStamina
+  maxStamina: 100
+  drainPerSecond: 20
+  regenPerSecond: 14
+  regenDelay: 1
+  recoverThreshold: 0.35
+  breathingLoudness: 1.5
+  breathingInterval: 0.5
 --- !u!1 &2062437259
 GameObject:
   m_ObjectHideFlags: 0
