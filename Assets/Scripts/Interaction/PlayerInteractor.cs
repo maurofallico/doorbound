@@ -4,18 +4,15 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInventory))]
 public class PlayerInteractor : MonoBehaviour
 {
-
-    public bool InteractionLocked { get; private set; }
     [SerializeField] private Camera playerCamera;
     [SerializeField] private float interactDistance = 2.5f;
     [SerializeField] private float nearbyInteractRadius = 2.5f;
     [SerializeField] private LayerMask interactableLayers = ~0;
 
-
     [SerializeField] private float clockAssistRadius = 0.8f;
     [SerializeField] private float clockAssistDistance = 3.5f;
     [SerializeField] private float clockAssistVerticalOffset = 0.5f;
-
+    public bool InteractionLocked { get; private set; }
 
     private PlayerInventory inventory;
     private IInteractable currentInteractable;
@@ -40,6 +37,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void Update()
     {
+
         if (InteractionLocked)
         {
             GameHud.Instance?.SetPrompt("");
@@ -54,10 +52,9 @@ public class PlayerInteractor : MonoBehaviour
         currentInteractable?.Interact(inventory);
     }
 
-
-
     private IInteractable FindInteractable()
     {
+
         Vector3 chestPosition = transform.position + Vector3.up * 1.2f;
 
         Ray ray = playerCamera != null
@@ -72,11 +69,7 @@ public class PlayerInteractor : MonoBehaviour
             Color.red
         );
 
-        if (Physics.Raycast(
-            ray,
-            out RaycastHit hit,
-            interactDistance,
-            interactableLayers))
+        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactableLayers))
         {
             // Punto exacto donde impactó el raycast.
             Debug.DrawLine(
@@ -99,8 +92,8 @@ public class PlayerInteractor : MonoBehaviour
                 return aimedInteractable;
         }
 
-        IInteractable assistedInteractable =
-    FindNearbyInteractableAbove();
+
+        IInteractable assistedInteractable = FindNearbyInteractableAbove();
 
         if (assistedInteractable != null)
             return assistedInteractable;
@@ -123,6 +116,8 @@ public class PlayerInteractor : MonoBehaviour
 
             if (interactable == null)
                 continue;
+
+            if (interactable == null) continue;
 
             float distance = Vector3.Distance(
                 transform.position,
@@ -166,6 +161,4 @@ public class PlayerInteractor : MonoBehaviour
 
         return null;
     }
-
-
 }

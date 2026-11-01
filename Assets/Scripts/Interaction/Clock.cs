@@ -31,7 +31,7 @@ public class ClockInteraction : MonoBehaviour, IInteractable
     private int interactionFrame;
 
     public int CurrentHour { get; private set; } = 12;
-    public int CurrentMinute { get; private set; } = 0;
+    public int CurrentMinute { get; private set; } = 15;
 
     private bool exitRequested;
 
@@ -134,7 +134,6 @@ public class ClockInteraction : MonoBehaviour, IInteractable
         if (Keyboard.current != null &&
             Keyboard.current.eKey.wasPressedThisFrame)
         {
-            Debug.Log($"E detectada en {name}");
             exitRequested = true;
         }
     }
