@@ -73,15 +73,12 @@ public class NoteReader : MonoBehaviour, IInteractable
         notePanel.SetActive(false);
         noteOpen = false;
 
-        // Volver a permitir movimiento
         if (playerMovement != null)
             playerMovement.enabled = true;
 
-        // Volver a permitir interacción
         if (playerInteractor != null)
             playerInteractor.enabled = true;
 
-        // Bloquear nuevamente el mouse
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
