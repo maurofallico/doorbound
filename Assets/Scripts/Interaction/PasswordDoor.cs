@@ -45,18 +45,14 @@ public class PasswordDoor : MonoBehaviour, IInteractable
         if (errorText != null)
             errorText.text = "";
 
-        // Ocultar prompt
         GameHud.Instance?.SetPrompt("");
 
-        // Detener jugador
         if (playerMovement != null)
             playerMovement.enabled = false;
 
-        // Desactivar interacción
         if (playerInteractor != null)
             playerInteractor.enabled = false;
 
-        // Mostrar mouse
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -85,18 +81,15 @@ public class PasswordDoor : MonoBehaviour, IInteractable
         passwordPanel.SetActive(false);
         panelOpen = false;
 
-        // Volver a bloquear el mouse
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // Devolver control al jugador
         if (playerMovement != null)
             playerMovement.enabled = true;
 
         if (playerInteractor != null)
             playerInteractor.enabled = true;
 
-        // Desaparecer la puerta
         gameObject.SetActive(false);
     }
 
