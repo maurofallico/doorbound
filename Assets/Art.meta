@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/Art.meta
 guid: 03d23dcc02baa3d4eb1988f55a86e342
 folderAsset: yes
 DefaultImporter:
+=======
+guid: fc4ccb94e6eb99f41bb6d4df6cd747ba
+PrefabImporter:
+>>>>>>> Stashed changes:Assets/Prefabs/ClockPuzzle.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
