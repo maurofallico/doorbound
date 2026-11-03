@@ -1,0 +1,1 @@
+Original supplied Poly Haven Blender packs. Imported at original metric proportions with 2K PBR maps. Pine saplings have three LOD levels; trunk simplified for runtime.
