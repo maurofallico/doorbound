@@ -8,6 +8,10 @@ public class NoteReader : MonoBehaviour, IInteractable
     [SerializeField] private string noteTitle = "Nota";
     [SerializeField][TextArea(3, 10)] private string noteText;
 
+    [Header("Sonido")]
+    [SerializeField] private AudioSource sonidoNota;
+    [SerializeField] private AudioSource sonidoNotaCerrar;
+
     [Header("UI")]
     [SerializeField] private GameObject notePanel;
     [SerializeField] private Text titleText;
@@ -40,6 +44,8 @@ public class NoteReader : MonoBehaviour, IInteractable
 
         notePanel.SetActive(true);
         noteOpen = true;
+        if (sonidoNota != null)
+            sonidoNota.Play();
 
         GameHud.Instance?.SetPrompt("");
 
@@ -81,6 +87,8 @@ public class NoteReader : MonoBehaviour, IInteractable
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        if (sonidoNotaCerrar != null)
+            sonidoNotaCerrar.Play();
     }
 
 }
