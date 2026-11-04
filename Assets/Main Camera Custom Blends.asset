@@ -35,3 +35,25 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
+  - From: CinemachineCamera
+    To: ClockInspectionCamera
+    Blend:
+      Style: 3
+      Time: 0.75
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: ClockInspectionCamera
+    To: CinemachineCamera
+    Blend:
+      Style: 3
+      Time: 0.75
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
