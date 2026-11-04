@@ -23,10 +23,16 @@ public class NoteReader : MonoBehaviour, IInteractable
 
     private bool noteOpen = false;
 
-    public string Prompt => "Presiona E para leer";
+    private bool interactionBlocked;
+    public bool CanInteract => !interactionBlocked;
+
+    [SerializeField] private string prompt = "[E] Leer";
+    public string Prompt => prompt;
 
     public void Interact(PlayerInventory playerInventory)
     {
+        if (!CanInteract) return;
+
         if (noteOpen)
             return;
 
@@ -91,5 +97,16 @@ public class NoteReader : MonoBehaviour, IInteractable
             sonidoNotaCerrar.Play();
     }
 
+    public void BlockNote()
+    {
+        interactionBlocked = true;
+        prompt = "";
+    }
+
+    public void UnlockNote()
+    {
+        interactionBlocked = false;
+        prompt = "[E] Leer";
+    }
 }
 

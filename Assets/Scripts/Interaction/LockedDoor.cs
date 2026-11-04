@@ -25,7 +25,7 @@ public class LockedDoor : MonoBehaviour, IInteractable
     private bool isUnlocked;
 
     public string Prompt =>
-        isOpen ? "Presiona E para cerrar" : "Presiona E para abrir";
+        isOpen ? "[E] Cerrar" : "[E] Abrir";
 
     private void Awake()
     {
