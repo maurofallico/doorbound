@@ -21891,7 +21891,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 319542861}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pillars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30391,7 +30391,7 @@ GameObject:
   - component: {fileID: 532044980}
   - component: {fileID: 532044979}
   - component: {fileID: 532044978}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mansion_Exterior_Wall_Finish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30975,7 +30975,7 @@ GameObject:
   - component: {fileID: 546777146}
   - component: {fileID: 546777145}
   - component: {fileID: 546777144}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34294,7 +34294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 641347342}
   - component: {fileID: 641347343}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35309,7 +35309,7 @@ GameObject:
   - component: {fileID: 682044124}
   - component: {fileID: 682044123}
   - component: {fileID: 682044122}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39951,7 +39951,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 800082987}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50739,7 +50739,7 @@ GameObject:
   - component: {fileID: 1081479961}
   - component: {fileID: 1081479960}
   - component: {fileID: 1081479959}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60699,7 +60699,7 @@ GameObject:
   - component: {fileID: 1231622912}
   - component: {fileID: 1231622914}
   - component: {fileID: 1231622913}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GateLockTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62164,7 +62164,7 @@ GameObject:
   - component: {fileID: 1283942967}
   - component: {fileID: 1283942966}
   - component: {fileID: 1283942965}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83213,7 +83213,7 @@ GameObject:
   - component: {fileID: 1581215723}
   - component: {fileID: 1581215722}
   - component: {fileID: 1581215721}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
