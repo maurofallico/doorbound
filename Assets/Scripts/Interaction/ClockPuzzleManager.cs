@@ -8,7 +8,7 @@ public class ClockPuzzleManager : MonoBehaviour
     [SerializeField] private ClockInteraction clock2;
     [SerializeField] private ClockInteraction clock3;
 
-    [SerializeField] private SecretDoorController secretDoor;
+    [SerializeField] private SecretDoorControllerBasement secretDoor;
 
     [Header("Cameras")]
     [SerializeField] private CinemachineCamera playerCamera;
