@@ -2755,13 +2755,13 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.02
     m_NormalBias: 0.04
-    m_NearPlane: 0.0864
+    m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -2812,7 +2812,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 34238763}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fixture_EntranceLantern_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2852,7 +2852,7 @@ GameObject:
   - component: {fileID: 37410273}
   - component: {fileID: 37410272}
   - component: {fileID: 37410271}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3656,7 +3656,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -4808,7 +4808,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 114143184}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MansionEntrance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6941,7 +6941,7 @@ GameObject:
   - component: {fileID: 161746703}
   - component: {fileID: 161746702}
   - component: {fileID: 161746701}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (2)2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10409,6 +10409,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door3
       objectReference: {fileID: 0}
+    - target: {fileID: 2181873624424171835, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3049784563525738047, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -10497,6 +10501,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 264151c38e6a6404c8b317a6bcddb1ed, type: 2}
+    - target: {fileID: 8231146431060404768, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10992,7 +11000,7 @@ GameObject:
   - component: {fileID: 229306440}
   - component: {fileID: 229306439}
   - component: {fileID: 229306438}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12201,6 +12209,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 983653396}
+    - target: {fileID: 1164834454737808876, guid: d4cb9e5e98bda664988e149b359e0086, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1929297196102447021, guid: d4cb9e5e98bda664988e149b359e0086, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -14025,6 +14037,10 @@ PrefabInstance:
       propertyPath: m_Faces.Array.data[17].m_SubmeshIndex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6797269564041160268, guid: d4cb9e5e98bda664988e149b359e0086, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7464632290018172863, guid: d4cb9e5e98bda664988e149b359e0086, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.80740005
@@ -14076,6 +14092,10 @@ PrefabInstance:
     - target: {fileID: 8071458553724263674, guid: d4cb9e5e98bda664988e149b359e0086, type: 3}
       propertyPath: m_Name
       value: Bed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8071458553724263674, guid: d4cb9e5e98bda664988e149b359e0086, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8792810288679535567, guid: d4cb9e5e98bda664988e149b359e0086, type: 3}
       propertyPath: m_Enabled
@@ -14699,7 +14719,7 @@ GameObject:
   - component: {fileID: 254826994}
   - component: {fileID: 254826993}
   - component: {fileID: 254826992}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21017,7 +21037,7 @@ Transform:
   m_GameObject: {fileID: 295897277}
   serializedVersion: 2
   m_LocalRotation: {x: 0.47697574, y: 0.00000008940697, z: -0.000000044703484, w: 0.8789165}
-  m_LocalPosition: {x: -0.000009244119, y: 0.41412032, z: 0.092837416}
+  m_LocalPosition: {x: -0, y: 0.41, z: 0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21069,7 +21089,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -21196,7 +21216,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -21891,7 +21911,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 319542861}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pillars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23045,7 +23065,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360963432}
   - component: {fileID: 360963433}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Entrance_WestHinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23883,7 +23903,7 @@ GameObject:
   - component: {fileID: 395130110}
   - component: {fileID: 395130109}
   - component: {fileID: 395130108}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25095,7 +25115,7 @@ GameObject:
   - component: {fileID: 429012575}
   - component: {fileID: 429012574}
   - component: {fileID: 429012573}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25311,7 +25331,7 @@ GameObject:
   - component: {fileID: 435715027}
   - component: {fileID: 435715029}
   - component: {fileID: 435715028}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26691,6 +26711,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door2
       objectReference: {fileID: 0}
+    - target: {fileID: 2181873624424171835, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3049784563525738047, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -26799,6 +26823,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 0951b3a3fce52604baeb28432b79c894, type: 2}
+    - target: {fileID: 8231146431060404768, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26834,7 +26862,7 @@ GameObject:
   - component: {fileID: 465750275}
   - component: {fileID: 465750274}
   - component: {fileID: 465750273}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28149,7 +28177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 473508890}
   - component: {fileID: 473508891}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door_Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29400,7 +29428,7 @@ GameObject:
   - component: {fileID: 520334408}
   - component: {fileID: 520334407}
   - component: {fileID: 520334406}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (7)2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30093,7 +30121,7 @@ GameObject:
   - component: {fileID: 530171389}
   - component: {fileID: 530171388}
   - component: {fileID: 530171387}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30391,7 +30419,7 @@ GameObject:
   - component: {fileID: 532044980}
   - component: {fileID: 532044979}
   - component: {fileID: 532044978}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mansion_Exterior_Wall_Finish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30467,7 +30495,19 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1104561699}
+  - {fileID: 1149444091}
+  - {fileID: 932597724}
+  - {fileID: 780835374}
+  - {fileID: 2001165789}
+  - {fileID: 898720569}
+  - {fileID: 1490729001}
+  - {fileID: 785213457}
+  - {fileID: 1102217899}
+  - {fileID: 1081479964}
+  - {fileID: 1283942970}
+  - {fileID: 546777149}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &533721940
@@ -30975,7 +31015,7 @@ GameObject:
   - component: {fileID: 546777146}
   - component: {fileID: 546777145}
   - component: {fileID: 546777144}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31257,10 +31297,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0.7071068, z: -0, w: 0}
   m_LocalPosition: {x: -7.36, y: 9.9, z: -82.4934}
-  m_LocalScale: {x: 1, y: 1, z: 0.32114404}
+  m_LocalScale: {x: 1, y: 1, z: 0.3211441}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: -90}
 --- !u!1001 &548304627
 PrefabInstance:
@@ -31509,7 +31549,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 557267739}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Doors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33513,13 +33553,13 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.02
     m_NormalBias: 0.04
-    m_NearPlane: 0.0864
+    m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -33870,7 +33910,7 @@ GameObject:
   m_Component:
   - component: {fileID: 626265928}
   - component: {fileID: 626265929}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Entrance_EastHinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34116,7 +34156,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -34294,7 +34334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 641347342}
   - component: {fileID: 641347343}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34961,7 +35001,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 672566377}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RigidDoorHinges
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35309,7 +35349,7 @@ GameObject:
   - component: {fileID: 682044124}
   - component: {fileID: 682044123}
   - component: {fileID: 682044122}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35589,12 +35629,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 682044121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 44.66, y: -4.11, z: -57.844}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 15.20047, y: -4.11, z: -25.401524}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1858835037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &682392082
 GameObject:
@@ -35607,7 +35647,7 @@ GameObject:
   - component: {fileID: 682392083}
   - component: {fileID: 682392085}
   - component: {fileID: 682392084}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38621,13 +38661,13 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.02
     m_NormalBias: 0.04
-    m_NearPlane: 0.0864
+    m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -38748,7 +38788,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -38810,7 +38850,7 @@ GameObject:
   - component: {fileID: 779516652}
   - component: {fileID: 779516651}
   - component: {fileID: 779516650}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (2)3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39247,12 +39287,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780835368}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: -0.7071068, w: 0}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: -8.91, y: 7.48, z: -45.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 270, y: 180, z: 0}
 --- !u!1 &785213451
 GameObject:
@@ -39481,7 +39521,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
 --- !u!1 &789047854
 GameObject:
@@ -39951,7 +39991,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 800082987}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40023,7 +40063,7 @@ GameObject:
   - component: {fileID: 809438022}
   - component: {fileID: 809438021}
   - component: {fileID: 809438020}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41369,7 +41409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 829939595}
   - component: {fileID: 829939594}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EntranceDoor_Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42739,7 +42779,7 @@ GameObject:
   - component: {fileID: 865008968}
   - component: {fileID: 865008967}
   - component: {fileID: 865008966}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (2)4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43225,7 +43265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 877894541}
   - component: {fileID: 877894542}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door2_Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44084,7 +44124,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 270, y: 270, z: 0}
 --- !u!1 &901944555
 GameObject:
@@ -44136,7 +44176,7 @@ GameObject:
   - component: {fileID: 907116925}
   - component: {fileID: 907116924}
   - component: {fileID: 907116923}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44982,7 +45022,7 @@ Light:
     m_Strength: 1
     m_Bias: 0.02
     m_NormalBias: 0.04
-    m_NearPlane: 0.0864
+    m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -45683,7 +45723,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
 --- !u!1001 &932607105
 PrefabInstance:
@@ -46744,7 +46784,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -47868,7 +47908,7 @@ GameObject:
   - component: {fileID: 1023103927}
   - component: {fileID: 1023103926}
   - component: {fileID: 1023103925}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48404,7 +48444,7 @@ GameObject:
   - component: {fileID: 1043134098}
   - component: {fileID: 1043134097}
   - component: {fileID: 1043134096}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49265,7 +49305,7 @@ GameObject:
   - component: {fileID: 1067330461}
   - component: {fileID: 1067330460}
   - component: {fileID: 1067330459}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49809,6 +49849,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door4
       objectReference: {fileID: 0}
+    - target: {fileID: 2181873624424171835, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3049784563525738047, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -50233,6 +50277,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: e0455023242150149a0a5c9e97f7580f, type: 2}
+    - target: {fileID: 8231146431060404768, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -50266,7 +50314,7 @@ GameObject:
   - component: {fileID: 1068499452}
   - component: {fileID: 1068499451}
   - component: {fileID: 1068499450}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50739,7 +50787,7 @@ GameObject:
   - component: {fileID: 1081479961}
   - component: {fileID: 1081479960}
   - component: {fileID: 1081479959}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50949,10 +50997,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0.7071068, z: -0, w: 0}
   m_LocalPosition: {x: -7.379, y: 9.83, z: -68.58}
-  m_LocalScale: {x: 1, y: 1, z: 0.6529235}
+  m_LocalScale: {x: 1, y: 1, z: 0.6529236}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: -90}
 --- !u!1001 &1082208872
 PrefabInstance:
@@ -51914,7 +51962,7 @@ GameObject:
   - component: {fileID: 1094338839}
   - component: {fileID: 1094338838}
   - component: {fileID: 1094338840}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallPlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52495,7 +52543,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
 --- !u!1 &1104053198
 GameObject:
@@ -52576,7 +52624,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -52851,7 +52899,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 270, y: 270, z: 0}
 --- !u!43 &1105459922
 Mesh:
@@ -53312,7 +53360,7 @@ GameObject:
   - component: {fileID: 1132767354}
   - component: {fileID: 1132767353}
   - component: {fileID: 1132767352}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58362,7 +58410,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
 --- !u!1001 &1156077907
 PrefabInstance:
@@ -58629,6 +58677,10 @@ PrefabInstance:
     - target: {fileID: 2181873624424171835, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_Name
       value: EntranceDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2181873624424171835, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3049784563525738047, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_Mesh
@@ -58969,6 +59021,10 @@ PrefabInstance:
     - target: {fileID: 6978868523199854424, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8231146431060404768, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8231146431060404768, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_IsActive
@@ -60405,7 +60461,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -60537,7 +60593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1228793748}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Exterior_EntranceLighting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60699,7 +60755,7 @@ GameObject:
   - component: {fileID: 1231622912}
   - component: {fileID: 1231622914}
   - component: {fileID: 1231622913}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GateLockTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60893,7 +60949,7 @@ GameObject:
   - component: {fileID: 1239858337}
   - component: {fileID: 1239858336}
   - component: {fileID: 1239858335}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61222,7 +61278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1243495695}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DoorFrames_Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61856,7 +61912,7 @@ GameObject:
   - component: {fileID: 1267533046}
   - component: {fileID: 1267533045}
   - component: {fileID: 1267533044}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62164,7 +62220,7 @@ GameObject:
   - component: {fileID: 1283942967}
   - component: {fileID: 1283942966}
   - component: {fileID: 1283942965}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62374,10 +62430,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0.7071068, z: -0, w: 0}
   m_LocalPosition: {x: -7.36, y: 9.85, z: -68.5152}
-  m_LocalScale: {x: 1, y: 1, z: 0.6529235}
+  m_LocalScale: {x: 1, y: 1, z: 0.6529236}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: -90}
 --- !u!1 &1284979388
 GameObject:
@@ -62963,6 +63019,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1839979415}
+    - target: {fileID: 1062992760152244932, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1086504999492600688, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -64547,6 +64607,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2926120795410201066, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2954574185966702495, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -64567,10 +64631,18 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 146109622}
+    - target: {fileID: 3423736588084188915, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3510452745484588259, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1502434293}
+    - target: {fileID: 3602260186242604533, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4055993277950073888, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -65587,6 +65659,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 6.45
       objectReference: {fileID: 0}
+    - target: {fileID: 5029143772704679847, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5062628234490896201, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -65594,6 +65670,10 @@ PrefabInstance:
     - target: {fileID: 5062628234490896201, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: m_VersionIndex
       value: 1792
+      objectReference: {fileID: 0}
+    - target: {fileID: 5230773214339331387, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5385022551992321595, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: m_Mesh
@@ -65614,6 +65694,10 @@ PrefabInstance:
     - target: {fileID: 5509510381503005201, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: m_SelectedEditorRenderState
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649371024065955718, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5668271984272105889, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: m_Mesh
@@ -66019,6 +66103,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6107196611419692591, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6169312903588782940, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -66206,6 +66294,10 @@ PrefabInstance:
     - target: {fileID: 6379947670766350256, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: m_LocalPosition.z
       value: 14.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 6508968664143585079, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6607751301313369663, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: m_Mesh
@@ -67655,6 +67747,10 @@ PrefabInstance:
       propertyPath: 'm_SharedVertices.Array.data[8].m_Vertices.Array.data[0]'
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 7508656794665389841, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7648340021609031813, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -68127,6 +68223,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 523907951}
+    - target: {fileID: 8358375799993490606, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8370914992246477374, guid: a540d6bf9caca1c41ad651aaea8f7c47, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -69322,7 +69422,7 @@ GameObject:
   - component: {fileID: 1302358183}
   - component: {fileID: 1302358182}
   - component: {fileID: 1302358184}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MountingArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70360,7 +70460,7 @@ GameObject:
   - component: {fileID: 1331485595}
   - component: {fileID: 1331485594}
   - component: {fileID: 1331485593}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (3)2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71822,7 +71922,7 @@ GameObject:
   - component: {fileID: 1381500028}
   - component: {fileID: 1381500027}
   - component: {fileID: 1381500026}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72258,7 +72358,7 @@ GameObject:
   - component: {fileID: 1400889373}
   - component: {fileID: 1400889372}
   - component: {fileID: 1400889371}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73827,7 +73927,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -73889,7 +73989,7 @@ GameObject:
   - component: {fileID: 1439710057}
   - component: {fileID: 1439710056}
   - component: {fileID: 1439710055}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74159,7 +74259,7 @@ GameObject:
   - component: {fileID: 1450679002}
   - component: {fileID: 1450679001}
   - component: {fileID: 1450679000}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74452,7 +74552,7 @@ GameObject:
   - component: {fileID: 1461126503}
   - component: {fileID: 1461126502}
   - component: {fileID: 1461126501}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75473,7 +75573,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 270, y: 270, z: 0}
 --- !u!43 &1494615288
 Mesh:
@@ -77288,7 +77388,7 @@ GameObject:
   - component: {fileID: 1521579449}
   - component: {fileID: 1521579448}
   - component: {fileID: 1521579447}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (3)3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81203,7 +81303,7 @@ GameObject:
   - component: {fileID: 1546214851}
   - component: {fileID: 1546214850}
   - component: {fileID: 1546214849}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82742,7 +82842,7 @@ GameObject:
   - component: {fileID: 1572480236}
   - component: {fileID: 1572480235}
   - component: {fileID: 1572480234}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83213,7 +83313,7 @@ GameObject:
   - component: {fileID: 1581215723}
   - component: {fileID: 1581215722}
   - component: {fileID: 1581215721}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83493,12 +83593,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1581215720}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 62.547, y: -3.327059, z: -59.76}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 33.08747, y: -3.327059, z: -27.31752}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1858835037}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &1581675235
 PrefabInstance:
@@ -91675,7 +91775,7 @@ GameObject:
   - component: {fileID: 1649735833}
   - component: {fileID: 1649735832}
   - component: {fileID: 1649735831}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93350,7 +93450,7 @@ GameObject:
   - component: {fileID: 1711788782}
   - component: {fileID: 1711788781}
   - component: {fileID: 1711788783}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MountingArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95008,7 +95108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1777859026}
   - component: {fileID: 1777859027}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door4_Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95628,7 +95728,7 @@ GameObject:
   - component: {fileID: 1833167106}
   - component: {fileID: 1833167105}
   - component: {fileID: 1833167104}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100591,6 +100691,8 @@ Transform:
   - {fileID: 972839913}
   - {fileID: 229306443}
   - {fileID: 797021376}
+  - {fileID: 682044127}
+  - {fileID: 1581215726}
   m_Father: {fileID: 1393221444}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1859660582
@@ -101352,7 +101454,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -102626,7 +102728,7 @@ GameObject:
   - component: {fileID: 1917831240}
   - component: {fileID: 1917831239}
   - component: {fileID: 1917831238}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (3)4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103028,7 +103130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1926281586}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fixture_EntranceLantern_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103395,7 +103497,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -104259,7 +104361,7 @@ GameObject:
   - component: {fileID: 1978025433}
   - component: {fileID: 1978025432}
   - component: {fileID: 1978025434}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallPlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105290,7 +105392,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 532044980}
   m_LocalEulerAnglesHint: {x: 270, y: 270, z: 0}
 --- !u!1 &2001396206
 GameObject:
@@ -108765,7 +108867,7 @@ GameObject:
   - component: {fileID: 2062437262}
   - component: {fileID: 2062437261}
   - component: {fileID: 2062437260}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114850,7 +114952,7 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -115969,13 +116071,13 @@ Light:
   m_InnerSpotAngle: 100
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.02
     m_NormalBias: 0.04
-    m_NearPlane: 0.0864
+    m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -116335,7 +116437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2119234672}
   - component: {fileID: 2119234673}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door3_Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117589,7 +117691,7 @@ GameObject:
   - component: {fileID: 7149463153625585861}
   - component: {fileID: 2008782603317795026}
   - component: {fileID: 418797096}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117995,7 +118097,7 @@ GameObject:
   - component: {fileID: 2239820045296063491}
   - component: {fileID: 2239820045297205125}
   - component: {fileID: 2239820045297205126}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118014,7 +118116,7 @@ GameObject:
   - component: {fileID: 2239820045296071123}
   - component: {fileID: 2239820045297220465}
   - component: {fileID: 2239820045297220466}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118033,7 +118135,7 @@ GameObject:
   - component: {fileID: 2239820045296001707}
   - component: {fileID: 2239820045296995557}
   - component: {fileID: 2239820045296995558}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder.000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118052,7 +118154,7 @@ GameObject:
   - component: {fileID: 2239820045296057979}
   - component: {fileID: 2239820045296998185}
   - component: {fileID: 2239820045296998186}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118068,7 +118170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2239820045295233459}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LanternV2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118543,7 +118645,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2474971537011027112}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118559,7 +118661,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2474971535692972439}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118575,7 +118677,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2474971535913415756}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118591,7 +118693,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2474971534989707031}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118799,7 +118901,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4120404792539136353}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LanternV2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118818,7 +118920,7 @@ GameObject:
   - component: {fileID: 4120404792539895465}
   - component: {fileID: 4120404792541052923}
   - component: {fileID: 4120404792541052924}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118837,7 +118939,7 @@ GameObject:
   - component: {fileID: 4120404792539941497}
   - component: {fileID: 4120404792541045815}
   - component: {fileID: 4120404792541045816}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder.000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118856,7 +118958,7 @@ GameObject:
   - component: {fileID: 4120404792539879681}
   - component: {fileID: 4120404792541352867}
   - component: {fileID: 4120404792541352868}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118875,7 +118977,7 @@ GameObject:
   - component: {fileID: 4120404792539888849}
   - component: {fileID: 4120404792541370199}
   - component: {fileID: 4120404792541370200}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119318,7 +119420,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3997976541720974487}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Entrance_Frame_VintageDouble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119352,7 +119454,7 @@ GameObject:
   - component: {fileID: 5483722117113484363}
   - component: {fileID: 8486766194870993321}
   - component: {fileID: 762107058}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119371,7 +119473,7 @@ GameObject:
   - component: {fileID: 5483722118481901940}
   - component: {fileID: 8486766195717188758}
   - component: {fileID: 2147269015}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119390,7 +119492,7 @@ GameObject:
   - component: {fileID: 5483722118135565487}
   - component: {fileID: 8486766196043585869}
   - component: {fileID: 1786776654}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119409,7 +119511,7 @@ GameObject:
   - component: {fileID: 5483722118052839412}
   - component: {fileID: 8486766195287599638}
   - component: {fileID: 1435614999}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119425,7 +119527,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255237646083072448}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119664,6 +119766,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 2181873624424171835, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3049784563525738047, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -119756,6 +119862,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 3639e3e803826c3478a39adea238cbef, type: 2}
+    - target: {fileID: 8231146431060404768, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -119786,7 +119896,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1437814806853196596}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door2_Frame_D1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119802,7 +119912,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1437814807036473071}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door3_Frame_D1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119818,7 +119928,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1437814806146260404}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door_Frame_D1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119834,7 +119944,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1437814806023796235}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door4_Frame_D1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119854,23 +119964,9 @@ SceneRoots:
   - {fileID: 1750527631}
   - {fileID: 1176294063}
   - {fileID: 1243753529}
-  - {fileID: 1081479964}
-  - {fileID: 1283942970}
-  - {fileID: 546777149}
   - {fileID: 1142212112}
-  - {fileID: 1581215726}
-  - {fileID: 682044127}
   - {fileID: 1386917631}
   - {fileID: 800082987}
-  - {fileID: 1102217899}
-  - {fileID: 785213457}
-  - {fileID: 1490729001}
-  - {fileID: 898720569}
-  - {fileID: 2001165789}
-  - {fileID: 780835374}
-  - {fileID: 932597724}
-  - {fileID: 1149444091}
-  - {fileID: 1104561699}
   - {fileID: 532044980}
   - {fileID: 2117766418}
   - {fileID: 619669658}
