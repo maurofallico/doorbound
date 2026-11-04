@@ -186,6 +186,11 @@ public class EnemyPatrol : MonoBehaviour
             return;
         }
 
+        if (currentState == State.Observing)
+        {
+            return;
+        }
+
         if (result == EnemyDetectionResult.Visible)
         {
             if (Vector3.Distance(transform.position, playerTransform.position) <= instantChaseDistance)
@@ -193,15 +198,11 @@ public class EnemyPatrol : MonoBehaviour
                 loseSightTimer = loseSightDelay;
                 SetState(State.Chasing);
             }
-            else if (currentState != State.Observing)
+            else
             {
                 observeTimer = 0f;
                 SetState(State.Observing);
             }
-        }
-        else if (currentState == State.Observing)
-        {
-            SearchLastKnownPosition();
         }
     }
 
@@ -219,13 +220,20 @@ public class EnemyPatrol : MonoBehaviour
 
     private void HandleNoise(Vector3 noisePosition, float loudness)
     {
-        if (defeatPending || currentState == State.Observing || currentState == State.Chasing)
+        if (defeatPending || currentState == State.Observing)
         {
             return;
         }
 
         if (!hearing.CanHear(noisePosition, loudness))
         {
+            return;
+        }
+
+        if (currentState == State.Chasing)
+        {
+            lastKnownPlayerPosition = noisePosition;
+            loseSightTimer = loseSightDelay;
             return;
         }
 
@@ -291,7 +299,7 @@ public class EnemyPatrol : MonoBehaviour
             return;
         }
 
-        MoveTowardsTarget(playerTransform.position, chaseSpeed);
+        MoveTowardsTarget(lastKnownPlayerPosition, chaseSpeed);
     }
 
     private void Patrol()

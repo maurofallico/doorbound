@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private CharacterController controller;
     private Animator animator;
+    private PlayerStamina stamina;
 
     private Vector2 moveInput;
     private Vector2 lookInput;
@@ -40,11 +41,13 @@ public class PlayerMovement : MonoBehaviour
     public bool IsMoving => moveInput.sqrMagnitude > 0.01f;
     public bool IsRunning => isRunning;
     public bool IsCrouching => isCrouching;
+    public bool WantsToRun => runInput && !isCrouching && IsMoving;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        stamina = GetComponent<PlayerStamina>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -93,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         float currentSpeed = isRunning ? runSpeed : walkSpeed;
+        if (stamina != null) currentSpeed *= stamina.SpeedMultiplier;
 
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
@@ -146,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateStates()
     {
         isCrouching = crouchInput;
-        isRunning = runInput && !isCrouching;
+        isRunning = runInput && !isCrouching && (stamina == null || stamina.CanRun);
         UpdateCharacterController();
     }
 
