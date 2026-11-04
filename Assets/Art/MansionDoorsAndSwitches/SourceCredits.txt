@@ -1,0 +1,23 @@
+woodendoor.glb
+{
+  "author": "Mark Peters (https://sketchfab.com/mark-peters)",
+  "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+  "source": "https://sketchfab.com/3d-models/vintage-double-wooden-doors-4096px2-f2dd02e03ded432eb0ef080de0751b4a",
+  "title": "Vintage Double Wooden Doors - 4096px²"
+}
+
+interior_wood_doors_pack_1.glb
+{
+  "author": "Toni García Vilche (https://sketchfab.com/zul_gv)",
+  "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+  "source": "https://sketchfab.com/3d-models/interior-wood-doors-pack-1-32707dcfa6304f49bf99148d0211f5f7",
+  "title": "Interior Wood Doors Pack 1"
+}
+
+antique_light_switches_type_c.glb
+{
+  "author": "Mad_Lobster_Workshop (https://sketchfab.com/Mad_Lobster_Workshop)",
+  "license": "COPYRIGHT TO Mad_Lobster_Workshop",
+  "source": "https://sketchfab.com/3d-models/antique-light-switches-type-c-a3ad944d3f324e6b95182071f190848b",
+  "title": "Antique Light Switches Type C"
+}
