@@ -19,11 +19,6 @@ public class EnemyAudio : MonoBehaviour
     [SerializeField] private AudioClip searchingClip;
     [SerializeField] private float discoverCooldown = 4f;
 
-    [Header("Musica de persecucion")]
-    [SerializeField] private float musicVolume = 0.8f;
-    [SerializeField] private float musicFadeInSpeed = 2f;
-    [SerializeField] private float musicFadeOutSpeed = 0.4f;
-
     private EnemyPatrol patrol;
     private NavMeshAgent agent;
     private EnemyPatrol.State previousState;
@@ -47,6 +42,7 @@ public class EnemyAudio : MonoBehaviour
         }
 
         EnemyPatrol.State state = patrol.CurrentState;
+
         if (state != previousState)
         {
             OnStateChanged(state);
@@ -54,7 +50,6 @@ public class EnemyAudio : MonoBehaviour
         }
 
         UpdateSteps(state);
-        UpdateMusic(state);
     }
 
     private bool IsGameFinished()
@@ -65,15 +60,38 @@ public class EnemyAudio : MonoBehaviour
 
     private void OnStateChanged(EnemyPatrol.State state)
     {
+        // Música de persecución
+        if (state == EnemyPatrol.State.Chasing)
+        {
+            if (MusicManager.Instance != null)
+            {
+                MusicManager.Instance.StartChaseMusic();
+            }
+            else
+            {
+                Debug.LogWarning("No existe un MusicManager activo en la escena.");
+            }
+        }
+        else if (previousState == EnemyPatrol.State.Chasing)
+        {
+            if (MusicManager.Instance != null)
+            {
+                MusicManager.Instance.StopChaseMusic();
+            }
+        }
+
+        // Sonidos del enemigo
         bool discovered = state == EnemyPatrol.State.Observing
-            || (state == EnemyPatrol.State.Chasing && previousState != EnemyPatrol.State.Observing);
+            || (state == EnemyPatrol.State.Chasing
+                && previousState != EnemyPatrol.State.Observing);
 
         if (discovered && Time.time - lastDiscoverTime >= discoverCooldown)
         {
             lastDiscoverTime = Time.time;
             PlayClip(discoverClip);
         }
-        else if (state == EnemyPatrol.State.Investigating && previousState == EnemyPatrol.State.Patrolling)
+        else if (state == EnemyPatrol.State.Investigating
+            && previousState == EnemyPatrol.State.Patrolling)
         {
             PlayClip(searchingClip);
         }
@@ -111,16 +129,10 @@ public class EnemyAudio : MonoBehaviour
         if (musicSource == null || musicSource.clip == null) return;
 
         bool chasing = state == EnemyPatrol.State.Chasing;
-        if (chasing && !musicSource.isPlaying)
+        if (chasing)
         {
-            musicSource.volume = 0f;
-            musicSource.Play();
+            MusicManager.Instance.StartChaseMusic();
         }
-
-        float speed = chasing ? musicFadeInSpeed : musicFadeOutSpeed;
-        musicSource.volume = Mathf.MoveTowards(musicSource.volume, chasing ? musicVolume : 0f, speed * Time.deltaTime);
-
-        if (!chasing && musicSource.isPlaying && musicSource.volume <= 0f) musicSource.Stop();
     }
 
     private void PlayClip(AudioClip clip)
