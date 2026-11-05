@@ -60,6 +60,7 @@ public class PlayerStamina : MonoBehaviour
         if (stamina <= 0f)
         {
             IsExhausted = true;
+            DoorboundAudio.Play(DoorboundAudio.Cue.Exhausted, this);
         }
     }
 

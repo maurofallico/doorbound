@@ -9,6 +9,10 @@ public class AudioKeyPickup : MonoBehaviour
     private AudioSource audioSource;
     private bool llaveRecogida = false;
 
+    public GameObject Key => llave;
+    public bool HasAssignedAudio => llave != null && sonidosLlave != null &&
+        sonidosLlave.Length > 0 && GetComponent<AudioSource>() != null;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();

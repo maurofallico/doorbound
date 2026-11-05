@@ -13,6 +13,7 @@ public class KeyPickup : MonoBehaviour, IInteractable
     {
         if (!CanInteract) return;
         playerInventory.AddKey(keyId);
+        DoorboundAudio.PlayKey(this);
         gameObject.SetActive(false);
     }
 

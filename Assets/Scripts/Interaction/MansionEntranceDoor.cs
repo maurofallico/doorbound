@@ -24,6 +24,7 @@ public class MansionEntranceDoor : MonoBehaviour, IInteractable
     public void Interact(PlayerInventory playerInventory)
     {
         isOpen = !isOpen;
+        DoorboundAudio.PlayIfUnassigned(isOpen ? DoorboundAudio.Cue.DoorOpen : DoorboundAudio.Cue.DoorClose, this);
 
         Quaternion target = closedRotation;
         if (isOpen)
