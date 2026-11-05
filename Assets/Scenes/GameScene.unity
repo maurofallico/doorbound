@@ -36548,6 +36548,8 @@ MonoBehaviour:
   clock2: {fileID: 1237080562}
   clock3: {fileID: 823823418}
   secretDoor: {fileID: 59469466}
+  sonidosReloj: []
+  audioSource: {fileID: 0}
   playerCamera: {fileID: 881099963}
   secretDoorCamera: {fileID: 1598784203}
   cameraReturnDelay: 1
@@ -142135,6 +142137,8 @@ GameObject:
   - component: {fileID: 2055722084}
   - component: {fileID: 2055722083}
   - component: {fileID: 2055722091}
+  - component: {fileID: 2055722093}
+  - component: {fileID: 2055722092}
   m_Layer: 8
   m_Name: 'Player '
   m_TagString: Player
@@ -142385,6 +142389,46 @@ MonoBehaviour:
   exhaustedSpeedMultiplier: 0.8
   breathingLoudness: 1.5
   breathingInterval: 0.5
+--- !u!114 &2055722092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055722082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c26f7b748dd6ef489c238414e23cde4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RitmoPasosDinamico
+  velocidadCaminar: 3
+  velocidadCorrer: 7
+  intervaloCaminando: 0.45
+  intervaloCorriendo: 0.25
+  pitchCaminando: 1
+  pitchCorriendo: 1.12
+  suavizadoPitch: 4
+  dbgEstado: 0
+  dbgVelocidad: 0
+  dbgIntervalo: 0
+  dbgPitch: 0
+--- !u!114 &2055722093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055722082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb1b156be138464891093c16abdd490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioPasos
+  sonidosPasos: []
+  grupoSFX: {fileID: 2880746256646924003, guid: 8b87ad3fa149eb74ca9b5703b355d5d3, type: 2}
+  intervaloPasos: 0.45
+  volumenMinimo: 0.65
+  volumenMaximo: 0.85
 --- !u!1 &2058477832
 GameObject:
   m_ObjectHideFlags: 0
