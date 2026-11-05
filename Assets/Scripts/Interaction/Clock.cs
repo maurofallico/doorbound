@@ -62,6 +62,11 @@ public class ClockInteraction : MonoBehaviour, IInteractable
 
         hand.RotationPivot.localRotation *= Quaternion.Euler(0f, 0f, 30f);
 
+        if (puzzleManager != null)
+        {
+            puzzleManager.ReproducirSonidoReloj();
+        }
+
         if (hand.HandType == ClockHandType.Hour)
         {
             DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.ClockHour, this);
@@ -197,7 +202,7 @@ public class ClockInteraction : MonoBehaviour, IInteractable
             if (playerControlsToDisable[i] != null)
                 playerControlsToDisable[i].enabled = false;
         }
-    }    
+    }
     public void UnlockControls()
     {
         if (previousControlStates == null)
