@@ -16,6 +16,7 @@ public class AudioPasos : MonoBehaviour
     private AudioSource audioSource;
     private CharacterController characterController;
     private float temporizador;
+    private Vector3 ultimaPosicion;
     private int ultimoPaso = -1;
     private AudioClip[] pasosExterior;
     private AudioClip[] ultimoBanco;
@@ -50,16 +51,20 @@ public class AudioPasos : MonoBehaviour
             audioSource.outputAudioMixerGroup = grupoSFX;
 
         characterController = GetComponent<CharacterController>();
+        ultimaPosicion = transform.position;
     }
 
     void Update()
     {
         if (characterController == null) return;
 
-        Vector3 velocidad = characterController.velocity;
-        velocidad.y = 0f;
+        Vector3 desplazamiento = transform.position - ultimaPosicion;
+        desplazamiento.y = 0f;
+        ultimaPosicion = transform.position;
 
-        bool caminando = velocidad.magnitude > 0.1f
+        float velocidad = Time.deltaTime > 0f ? desplazamiento.magnitude / Time.deltaTime : 0f;
+
+        bool caminando = velocidad > 0.1f
                          && characterController.isGrounded;
 
         temporizador = Mathf.Max(0f, temporizador - Time.deltaTime);

@@ -8,7 +8,7 @@ public sealed class DoorboundAudio : MonoBehaviour
     public enum Cue
     {
         DoorOpen, DoorClose, Gate, Bars, LightOn, LightOff, ClockHour, ClockMinute,
-        Button, SecretDoor, NoteOpen, NoteClose, Exhausted, PuzzleSolved
+        Button, SecretDoor, NoteOpen, NoteClose, Exhausted, PuzzleSolved, GateSlam
     }
 
     [SerializeField] private AudioMixerGroup musicGroup;
