@@ -501,7 +501,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7826854440312993228}
   - component: {fileID: 9070987820176568793}
-  - component: {fileID: 9123036054224600205}
   m_Layer: 0
   m_Name: ClockPuzzle
   m_TagString: Untagged
@@ -551,20 +550,6 @@ MonoBehaviour:
   clockViewPoint: {fileID: 6294219384779489611}
   playerControlsToDisable:
   - {fileID: 0}
---- !u!114 &9123036054224600205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5906534783705826128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff02d63fdeecdc4c8f82a279a2f5339, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ClockHoverDetector
-  targetCamera: {fileID: 0}
-  maxDistance: 100
 --- !u!1 &6561885741467618966
 GameObject:
   m_ObjectHideFlags: 0

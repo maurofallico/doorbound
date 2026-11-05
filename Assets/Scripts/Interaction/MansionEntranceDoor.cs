@@ -5,6 +5,8 @@ public class MansionEntranceDoor : MonoBehaviour, IInteractable
 {
     [SerializeField] private float openAngle = 90f;
     [SerializeField] private float openSpeed = 1f;
+    [SerializeField] private bool alwaysOpenInward;
+    [SerializeField] private float inwardOpenAngle = -90f;
 
     private Quaternion closedRotation;
     private Vector3 leafOffset;
@@ -26,7 +28,9 @@ public class MansionEntranceDoor : MonoBehaviour, IInteractable
         Quaternion target = closedRotation;
         if (isOpen)
         {
-            float angle = DoorSwing.AngleAwayFrom(transform.position, leafOffset, playerInventory.transform.position, Mathf.Abs(openAngle));
+            float angle = alwaysOpenInward
+                ? inwardOpenAngle
+                : DoorSwing.AngleAwayFrom(transform.position, leafOffset, playerInventory.transform.position, Mathf.Abs(openAngle));
             target = closedRotation * Quaternion.Euler(0f, angle, 0f);
         }
 
@@ -47,3 +51,4 @@ public class MansionEntranceDoor : MonoBehaviour, IInteractable
         transform.localRotation = target;
     }
 }
+

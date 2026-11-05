@@ -5,12 +5,44 @@ public class BotonPuzzle : MonoBehaviour, IInteractable
     public PuzzleBotones puzzleManager;
     public int numeroBoton;
 
-    public string Prompt => "Presiona E para pulsar el botón";
+    private bool interactionBlocked;
+    public bool CanInteract => !interactionBlocked;
+
+    [SerializeField] private string prompt = "[E] Presionar";
+    [SerializeField] private Behaviour[] playerControlsToDisable;
+
+    public string Prompt => prompt;
 
     public void Interact(PlayerInventory playerInventory)
     {
+        if (!CanInteract) return;
+
         puzzleManager.PulsarBoton(numeroBoton);
     }
+
+    public void BlockInteraction()
+    {
+        interactionBlocked = true;
+        playerControlsToDisable[0].enabled = false;
+        prompt = "";
+    }
+    public void BlockButton()
+    {
+        interactionBlocked = true;
+        prompt = "";
+    }
+
+    public void RestoreButton()
+    {
+        interactionBlocked = false;
+        prompt = "[E] Presionar";
+    }
+
+    public void RestoreControl()
+    {
+        playerControlsToDisable[0].enabled = true;
+    }
+
 }
 
 

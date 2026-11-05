@@ -19,11 +19,13 @@ public class LockedDoor : MonoBehaviour, IInteractable
     [SerializeField] private string openStateName = "DoorOpen";
     [SerializeField] private string closeStateName = "DoorClose";
 
+    [SerializeField] private AudioSource sonidoPuerta;
+
     private bool isOpen;
     private bool isUnlocked;
 
     public string Prompt =>
-        isOpen ? "Presiona E para cerrar" : "Presiona E para abrir";
+        isOpen ? "[E] Cerrar" : "[E] Abrir";
 
     private void Awake()
     {
@@ -64,6 +66,8 @@ public class LockedDoor : MonoBehaviour, IInteractable
         isOpen = !isOpen;
         if (isOpen)
         {
+            if (sonidoPuerta != null)
+                sonidoPuerta.Play();
             SpawnOnOpen();
         }
         if (animator != null)

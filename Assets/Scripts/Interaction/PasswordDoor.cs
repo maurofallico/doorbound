@@ -1,11 +1,14 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
-
+using System.Collections;
 public class PasswordDoor : MonoBehaviour, IInteractable
 {
-    [Header("Codigo")]
+    [Header("Desbloqueo")]
     [SerializeField] private string correctCode = "123456";
+    [SerializeField] private float distanciaApertura = 6f;
+    [SerializeField] private float duracionApertura = 6f;
+    private bool puertaAbierta = false;
 
     [Header("UI")]
     [SerializeField] private GameObject passwordPanel;
@@ -15,6 +18,9 @@ public class PasswordDoor : MonoBehaviour, IInteractable
     [Header("Jugador")]
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerInteractor playerInteractor;
+
+    [Header("Sonido")]
+    [SerializeField] private AudioSource sonidoBarrotes;
 
     private bool panelOpen = false;
 
@@ -90,7 +96,42 @@ public class PasswordDoor : MonoBehaviour, IInteractable
         if (playerInteractor != null)
             playerInteractor.enabled = true;
 
-        gameObject.SetActive(false);
+        if (puertaAbierta) return;
+
+        puertaAbierta = true;
+
+        StartCoroutine(MoverBarrotes());
+
+        sonidoBarrotes.Play();
+    }
+
+    IEnumerator MoverBarrotes()
+    {
+        Vector3 posicionInicial = transform.position;
+
+        Vector3 posicionFinal =
+        posicionInicial + Vector3.right * distanciaApertura;
+
+        float tiempo = 0f;
+
+        while (tiempo < duracionApertura)
+        {
+            tiempo += Time.deltaTime;
+
+            float progreso = Mathf.Clamp01(
+                tiempo / duracionApertura
+            );
+
+            transform.position = Vector3.Lerp(
+                posicionInicial,
+                posicionFinal,
+                progreso
+            );
+
+            yield return null;
+        }
+
+        transform.position = posicionFinal;
     }
 
     private void Update()
