@@ -89,7 +89,10 @@ public class PlayerInteractor : MonoBehaviour
                 hit.collider.GetComponentInParent<IInteractable>();
 
             if (aimedInteractable != null)
+            {
+                Debug.Log("INTERACCIÓN POR RAYCAST: " + hit.collider.name);
                 return aimedInteractable;
+            }
         }
 
 
@@ -111,6 +114,7 @@ public class PlayerInteractor : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
+            Debug.Log("INTERACCIÓN POR PROXIMIDAD: " + nearbyColliders[i].name);
             IInteractable interactable =
                 nearbyColliders[i].GetComponentInParent<IInteractable>();
 
@@ -156,7 +160,10 @@ public class PlayerInteractor : MonoBehaviour
                 col.GetComponentInParent<IInteractable>();
 
             if (interactable != null)
+            {
+                Debug.Log("INTERACCIÓN POR CLOCK ASSIST: " + col.name);
                 return interactable;
+            }
         }
 
         return null;
