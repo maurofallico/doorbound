@@ -110,7 +110,7 @@ public class PasswordDoor : MonoBehaviour, IInteractable
         Vector3 posicionInicial = transform.position;
 
         Vector3 posicionFinal =
-        posicionInicial + Vector3.right * distanciaApertura;
+        posicionInicial + Vector3.down * distanciaApertura;
 
         float tiempo = 0f;
 

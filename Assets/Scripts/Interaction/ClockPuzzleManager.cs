@@ -10,6 +10,10 @@ public class ClockPuzzleManager : MonoBehaviour
 
     [SerializeField] private SecretDoorControllerBasement secretDoor;
 
+    [Header("Sonidos del reloj")]
+    [SerializeField] private AudioClip[] sonidosReloj;
+    [SerializeField] private AudioSource audioSource;
+
     [Header("Cameras")]
     [SerializeField] private CinemachineCamera playerCamera;
     [SerializeField] private CinemachineCamera secretDoorCamera;
@@ -74,6 +78,15 @@ public class ClockPuzzleManager : MonoBehaviour
         clock2.ExitClock();
         clock3.ExitClock();
 
+    }
+
+    public void ReproducirSonidoReloj()
+    {
+        if (audioSource == null || sonidosReloj == null || sonidosReloj.Length == 0)
+            return;
+
+        int indice = Random.Range(0, sonidosReloj.Length);
+        audioSource.PlayOneShot(sonidosReloj[indice]);
     }
 
 

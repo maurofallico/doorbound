@@ -45476,6 +45476,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BotonPuzzle
   puzzleManager: {fileID: 1727033877}
   numeroBoton: 1
+  prompt: '[E] Presionar'
+  playerControlsToDisable: []
 --- !u!135 &707007186
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -81278,6 +81280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BotonPuzzle
   puzzleManager: {fileID: 1727033877}
   numeroBoton: 0
+  prompt: '[E] Presionar'
+  playerControlsToDisable: []
 --- !u!1 &1132767351
 GameObject:
   m_ObjectHideFlags: 0
@@ -87725,6 +87729,7 @@ MonoBehaviour:
   contentText: {fileID: 0}
   playerMovement: {fileID: 2055722087}
   playerInteractor: {fileID: 2055722083}
+  prompt: '[E] Leer'
 --- !u!64 &1238524680
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -115863,6 +115868,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BotonPuzzle
   puzzleManager: {fileID: 1727033877}
   numeroBoton: 2
+  prompt: '[E] Presionar'
+  playerControlsToDisable: []
 --- !u!135 &1611571797
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -120214,7 +120221,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d2fd650ff9e864183b7a0fc469dc22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PuzzleBotones
-  puerta: {fileID: 1555744191}
+  secretDoor: {fileID: 0}
+  playerCamera: {fileID: 0}
+  secretDoorCamera: {fileID: 0}
+  cameraReturnDelay: 2
+  button1: {fileID: 0}
+  button2: {fileID: 0}
+  button3: {fileID: 0}
+  note: {fileID: 0}
 --- !u!4 &1727033878
 Transform:
   m_ObjectHideFlags: 0
@@ -137079,6 +137093,9 @@ MonoBehaviour:
   interactableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+  clockAssistRadius: 0.8
+  clockAssistDistance: 3.5
+  clockAssistVerticalOffset: 0.5
 --- !u!114 &2055722084
 MonoBehaviour:
   m_ObjectHideFlags: 0

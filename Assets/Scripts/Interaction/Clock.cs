@@ -62,6 +62,11 @@ public class ClockInteraction : MonoBehaviour, IInteractable
 
         hand.RotationPivot.localRotation *= Quaternion.Euler(0f, 0f, 30f);
 
+        if (puzzleManager != null)
+        {
+            puzzleManager.ReproducirSonidoReloj();
+        }
+
         if (hand.HandType == ClockHandType.Hour)
         {
             CurrentHour++;
