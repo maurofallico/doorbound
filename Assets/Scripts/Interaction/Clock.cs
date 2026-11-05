@@ -202,7 +202,7 @@ public class ClockInteraction : MonoBehaviour, IInteractable
             if (playerControlsToDisable[i] != null)
                 playerControlsToDisable[i].enabled = false;
         }
-    }    
+    }
     public void UnlockControls()
     {
         if (previousControlStates == null)
