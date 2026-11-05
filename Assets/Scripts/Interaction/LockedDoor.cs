@@ -68,7 +68,13 @@ public class LockedDoor : MonoBehaviour, IInteractable
         {
             if (sonidoPuerta != null)
                 sonidoPuerta.Play();
+            else
+                DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.DoorOpen, this);
             SpawnOnOpen();
+        }
+        else if (sonidoPuerta == null)
+        {
+            DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.DoorClose, this);
         }
         if (animator != null)
         {

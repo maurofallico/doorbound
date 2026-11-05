@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &52001001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 52001002}
+  - component: {fileID: 52001003}
+  m_Layer: 0
+  m_Name: DoorboundAudio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &52001002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52001001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &52001003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52001001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb9ec7b5c084714979cd48de7542ccc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::DoorboundAudio
+  musicGroup: {fileID: 891040125563251401, guid: 8b87ad3fa149eb74ca9b5703b355d5d3, type: 2}
+  sfxGroup: {fileID: 2880746256646924003, guid: 8b87ad3fa149eb74ca9b5703b355d5d3, type: 2}
+  ambientGroup: {fileID: 891040125563251402, guid: 8b87ad3fa149eb74ca9b5703b355d5d3, type: 2}
+  exploration: {fileID: 8300000, guid: da1fee1b783efd34fa252feadf5630e2, type: 3}
+  indoorAmbience: {fileID: 8300000, guid: 464b05e8b412e5e4abac42fa841b5839, type: 3}
+  outdoorAmbience: {fileID: 8300000, guid: 077ecbec8e0bf244790d45de2bbce482, type: 3}
+  outdoorWind: {fileID: 8300000, guid: 37809884cf2d6054e96bbd5ff01d5781, type: 3}
+  indoorSteps:
+  - {fileID: 8300000, guid: 0af79948e9de11b4988114d066b51398, type: 3}
+  - {fileID: 8300000, guid: eef4f559c3c988f4d917100e91d4d205, type: 3}
+  - {fileID: 8300000, guid: 4313d74fcefb9f6448bbe2c0f004ff1d, type: 3}
+  outdoorSteps:
+  - {fileID: 8300000, guid: 4b61df7750e16a644aefc36dfa89c277, type: 3}
+  - {fileID: 8300000, guid: fb7a9ff2b3d9a7345a3de4ef5b8bd8e2, type: 3}
+  - {fileID: 8300000, guid: e043aa2c636b3f14e967f1eaf4309410, type: 3}
+  keyVariants:
+  - {fileID: 8300000, guid: 14c7c92e99c376643aa4d2722c6f1f28, type: 3}
+  - {fileID: 8300000, guid: dbc3f40e1045d1c4b8a7db297b6bc0d4, type: 3}
+  - {fileID: 8300000, guid: 9019706f34fc73b42aecee23a37175ad, type: 3}
+  cues:
+  - {fileID: 8300000, guid: 46f25b41b0f8ad0428f9dc563ba67758, type: 3}
+  - {fileID: 8300000, guid: 2a481d076600c8b4597fc93b215986a0, type: 3}
+  - {fileID: 8300000, guid: 6f06adecaba7fdd428c486e2df13fedf, type: 3}
+  - {fileID: 8300000, guid: 366c853f6a31e8841b3ed60a977c3272, type: 3}
+  - {fileID: 8300000, guid: 67c643b353269e74ea6df09c8414bb17, type: 3}
+  - {fileID: 8300000, guid: 051947e3f189e004ab0a32d11f52c168, type: 3}
+  - {fileID: 8300000, guid: 72e45ebb16744114a80a73adf308bdc1, type: 3}
+  - {fileID: 8300000, guid: 5d2f03db7911ec34cb1c0040873ac5bf, type: 3}
+  - {fileID: 8300000, guid: 5d2f03db7911ec34cb1c0040873ac5bf, type: 3}
+  - {fileID: 8300000, guid: de305a0a9d3965d4b8e41a1762560f56, type: 3}
+  - {fileID: 8300000, guid: 398c034c46c9df14691db9dc96206ed7, type: 3}
+  - {fileID: 8300000, guid: 257b72e30eb3008458a9fd32c65e6ead, type: 3}
+  - {fileID: 8300000, guid: 7aca9fcc1f6282b44abcb0ecc8030cbd, type: 3}
+  - {fileID: 8300000, guid: 8a04e2bacf74ed843bce3aed990dc4e1, type: 3}

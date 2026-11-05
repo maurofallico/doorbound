@@ -52,6 +52,8 @@ public class NoteReader : MonoBehaviour, IInteractable
         noteOpen = true;
         if (sonidoNota != null)
             sonidoNota.Play();
+        else if (sonidoNotaCerrar == null)
+            DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.NoteOpen, this);
 
         GameHud.Instance?.SetPrompt("");
 
@@ -95,6 +97,8 @@ public class NoteReader : MonoBehaviour, IInteractable
         Cursor.visible = false;
         if (sonidoNotaCerrar != null)
             sonidoNotaCerrar.Play();
+        else if (sonidoNota == null)
+            DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.NoteClose, this);
     }
 
     public void BlockNote()
