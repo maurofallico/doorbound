@@ -32,7 +32,7 @@ public class FenceGate : MonoBehaviour, IInteractable
     {
         if (isOpen)
         {
-            Close(openSpeed);
+            Close(openSpeed, DoorboundAudio.Cue.Gate);
             return;
         }
 
@@ -51,13 +51,13 @@ public class FenceGate : MonoBehaviour, IInteractable
     {
         if (!isOpen) return;
 
-        Close(slamSpeed);
+        Close(slamSpeed, DoorboundAudio.Cue.GateSlam);
     }
 
-    private void Close(float speed)
+    private void Close(float speed, DoorboundAudio.Cue cue)
     {
         isOpen = false;
-        DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.Gate, this);
+        DoorboundAudio.PlayIfUnassigned(cue, this);
         MoveTo(leftClosed, rightClosed, speed);
     }
 
