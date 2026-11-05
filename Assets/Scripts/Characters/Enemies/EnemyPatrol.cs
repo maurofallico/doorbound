@@ -4,8 +4,10 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyPatrol : MonoBehaviour
 {
-    private enum State { Patrolling, Investigating, Observing, Chasing }
+    public enum State { Patrolling, Investigating, Observing, Chasing }
     private State currentState = State.Patrolling;
+
+    public State CurrentState => currentState;
 
     [Header("Patrol")]
     [Range(0.1f, 1f)]
