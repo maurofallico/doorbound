@@ -12,10 +12,9 @@ public class EnemyRoomLever : MonoBehaviour, IInteractable
     [Header("Ruido")]
     [SerializeField] private float noiseLoudness = 3f;
 
-    [Header("Manija")]
-    [SerializeField] private Transform handle;
-    [SerializeField] private Vector3 offRotation = new Vector3(-45f, 0f, 0f);
-    [SerializeField] private Vector3 onRotation = new Vector3(45f, 0f, 0f);
+    [Header("Modelo")]
+    [SerializeField] private GameObject leverModel;
+    [SerializeField] private AnimationClip switchClip;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -37,7 +36,7 @@ public class EnemyRoomLever : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        SetHandle(0f);
+        SetLeverPose(0f);
     }
 
     private void OnEnable()
@@ -70,7 +69,7 @@ public class EnemyRoomLever : MonoBehaviour, IInteractable
         }
 
         holdTimer += Time.deltaTime;
-        SetHandle(holdTimer / holdDuration);
+        SetLeverPose(holdTimer / holdDuration);
 
         if (holdTimer >= holdDuration) Activate();
     }
@@ -85,18 +84,16 @@ public class EnemyRoomLever : MonoBehaviour, IInteractable
     {
         isHolding = false;
         holdTimer = 0f;
-        SetHandle(0f);
+        SetLeverPose(0f);
     }
 
     private void Activate()
     {
         isHolding = false;
-        SetHandle(1f);
+        SetLeverPose(1f);
 
         if (audioSource != null && activatedClip != null) audioSource.PlayOneShot(activatedClip);
 
-        // Se emite desde el jugador: EnemyHearing ignora los ruidos fuera de EnemyRoom
-        // y la palanca, al estar en la pared, puede quedar fuera.
         NoiseEvents.Emit(holder.position, noiseLoudness);
         exitDoor.OpenTimed();
     }
@@ -104,17 +101,13 @@ public class EnemyRoomLever : MonoBehaviour, IInteractable
     private void Rearm()
     {
         holdTimer = 0f;
-        SetHandle(0f);
+        SetLeverPose(0f);
     }
 
-    private void SetHandle(float progress)
+    private void SetLeverPose(float progress)
     {
-        if (handle == null) return;
+        if (leverModel == null || switchClip == null) return;
 
-        handle.localRotation = Quaternion.Slerp(
-            Quaternion.Euler(offRotation),
-            Quaternion.Euler(onRotation),
-            progress
-        );
+        switchClip.SampleAnimation(leverModel, switchClip.length * Mathf.Clamp01(progress));
     }
 }
