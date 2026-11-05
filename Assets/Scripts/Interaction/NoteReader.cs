@@ -72,7 +72,6 @@ public class NoteReader : MonoBehaviour, IInteractable
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        Debug.Log("La nota fue interactuada");
 
         if (noteOpen)
             return;

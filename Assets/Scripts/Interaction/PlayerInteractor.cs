@@ -89,7 +89,9 @@ public class PlayerInteractor : MonoBehaviour
                 hit.collider.GetComponentInParent<IInteractable>();
 
             if (aimedInteractable != null)
+            {
                 return aimedInteractable;
+            }
         }
 
 
@@ -156,7 +158,9 @@ public class PlayerInteractor : MonoBehaviour
                 col.GetComponentInParent<IInteractable>();
 
             if (interactable != null)
+            {
                 return interactable;
+            }
         }
 
         return null;

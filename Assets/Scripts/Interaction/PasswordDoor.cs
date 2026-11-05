@@ -8,6 +8,7 @@ public class PasswordDoor : MonoBehaviour, IInteractable
     [SerializeField] private string correctCode = "123456";
     [SerializeField] private float distanciaApertura = 6f;
     [SerializeField] private float duracionApertura = 6f;
+    [SerializeField] private Transform barrotes;
     private bool puertaAbierta = false;
 
     [Header("UI")]
@@ -23,11 +24,19 @@ public class PasswordDoor : MonoBehaviour, IInteractable
     [SerializeField] private AudioSource sonidoBarrotes;
 
     private bool panelOpen = false;
-
-    public string Prompt => "Presiona E para introducir el código";
+    public string Prompt => prompt;
+    private bool interactionBlocked;
+    public bool CanInteract => !interactionBlocked;
+    [SerializeField] private string prompt = "[E] Introducir código";
 
     public void Interact(PlayerInventory playerInventory)
     {
+        if (interactionBlocked)
+        {
+            prompt = "";
+            return;
+        }
+
         if (panelOpen)
             return;
 
@@ -65,8 +74,14 @@ public class PasswordDoor : MonoBehaviour, IInteractable
 
     public void CheckPassword()
     {
+
         if (inputField == null)
+        {
+            Debug.LogError("InputField no asignado");
             return;
+        }
+
+        Debug.Log("Código ingresado: " + inputField.text);
 
         if (inputField.text == correctCode)
         {
@@ -74,6 +89,7 @@ public class PasswordDoor : MonoBehaviour, IInteractable
         }
         else
         {
+
             if (errorText != null)
                 errorText.text = "Código incorrecto";
 
@@ -84,6 +100,7 @@ public class PasswordDoor : MonoBehaviour, IInteractable
 
     private void OpenDoor()
     {
+        interactionBlocked = true;
         passwordPanel.SetActive(false);
         panelOpen = false;
 
@@ -110,10 +127,10 @@ public class PasswordDoor : MonoBehaviour, IInteractable
 
     IEnumerator MoverBarrotes()
     {
-        Vector3 posicionInicial = transform.position;
+        Vector3 posicionInicial = barrotes.position;
 
         Vector3 posicionFinal =
-        posicionInicial + Vector3.down * distanciaApertura;
+            posicionInicial + Vector3.up * distanciaApertura;
 
         float tiempo = 0f;
 
@@ -125,7 +142,7 @@ public class PasswordDoor : MonoBehaviour, IInteractable
                 tiempo / duracionApertura
             );
 
-            transform.position = Vector3.Lerp(
+            barrotes.position = Vector3.Lerp(
                 posicionInicial,
                 posicionFinal,
                 progreso
@@ -134,7 +151,7 @@ public class PasswordDoor : MonoBehaviour, IInteractable
             yield return null;
         }
 
-        transform.position = posicionFinal;
+        barrotes.position = posicionFinal;
     }
 
     private void Update()
