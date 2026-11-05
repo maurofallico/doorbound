@@ -11,6 +11,8 @@ public class NoteReader : MonoBehaviour, IInteractable
     [Header("Sonido")]
     [SerializeField] private AudioSource sonidoNota;
     [SerializeField] private AudioSource sonidoNotaCerrar;
+    [SerializeField] private AudioSource speechNote;
+    private bool speechPlayed;
 
     [Header("UI")]
     [SerializeField] private GameObject notePanel;
@@ -50,6 +52,10 @@ public class NoteReader : MonoBehaviour, IInteractable
 
         notePanel.SetActive(true);
         noteOpen = true;
+        if (speechNote != null && !speechPlayed)
+        {
+            speechNote.Play();
+        }
         if (sonidoNota != null)
             sonidoNota.Play();
         else if (sonidoNotaCerrar == null)
@@ -84,6 +90,11 @@ public class NoteReader : MonoBehaviour, IInteractable
 
     private void CloseNote()
     {
+        if (speechNote != null)
+        {
+            speechPlayed = true;
+            speechNote.Stop();
+        }
         notePanel.SetActive(false);
         noteOpen = false;
 
