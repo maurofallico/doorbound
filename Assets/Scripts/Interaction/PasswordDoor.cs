@@ -74,7 +74,6 @@ public class PasswordDoor : MonoBehaviour, IInteractable
 
     public void CheckPassword()
     {
-        Debug.Log("CHECK PASSWORD EJECUTADO");
 
         if (inputField == null)
         {
@@ -86,12 +85,10 @@ public class PasswordDoor : MonoBehaviour, IInteractable
 
         if (inputField.text == correctCode)
         {
-            Debug.Log("CÓDIGO CORRECTO");
             OpenDoor();
         }
         else
         {
-            Debug.Log("CÓDIGO INCORRECTO");
 
             if (errorText != null)
                 errorText.text = "Código incorrecto";

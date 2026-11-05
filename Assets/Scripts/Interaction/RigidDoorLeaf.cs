@@ -10,7 +10,7 @@ public sealed class RigidDoorLeaf : MonoBehaviour, IInteractable
     [SerializeField] private float openingAngle = 90f;
     private Quaternion closedRotation;
     public float OpeningProgress { get; private set; }
-    public string Prompt => (interactionTarget as IInteractable)?.Prompt ?? "";
+    public string Prompt => (interactionTarget as IInteractable)?.Prompt ?? "[E] Abrir";
 
     private void Awake() => closedRotation = transform.localRotation;
 
