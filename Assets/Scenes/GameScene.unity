@@ -11659,7 +11659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: requiresKey
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: openStateName
@@ -28895,7 +28895,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: requiresKey
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: openStateName
@@ -65996,7 +65996,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: requiresKey
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: openStateName
@@ -91232,6 +91232,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 567208290}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1290814740
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5076623755933646094, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_Name
+      value: AmbientSounds3D
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406817989068038438, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406817989068038438, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406817989068038438, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406817989068038438, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406817989068038438, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406817989068038438, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406817989068038438, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406817989068038438, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406817989068038438, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406817989068038438, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4e43b5f39402f8e4f93f0afad6b6e544, type: 3}
 --- !u!43 &1292006181
 Mesh:
   m_ObjectHideFlags: 0
@@ -141879,6 +141936,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 485082886}
     m_Modifications:
+    - target: {fileID: 2835341548289371551, guid: 4a40bf2a923798945a40fa64206c7261, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835341548289371551, guid: 4a40bf2a923798945a40fa64206c7261, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CheckPassword
+      objectReference: {fileID: 0}
+    - target: {fileID: 3372921728082162788, guid: 4a40bf2a923798945a40fa64206c7261, type: 3}
+      propertyPath: errorText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3372921728082162788, guid: 4a40bf2a923798945a40fa64206c7261, type: 3}
+      propertyPath: inputField
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3372921728082162788, guid: 4a40bf2a923798945a40fa64206c7261, type: 3}
+      propertyPath: passwordPanel
+      value: 
+      objectReference: {fileID: 1544136513}
     - target: {fileID: 1248674736841870081, guid: c9fcd15ed0d461d43a31aedc26118a17, type: 3}
       propertyPath: m_Name
       value: PasswordPanel
@@ -141975,26 +142052,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CheckPassword
       objectReference: {fileID: 0}
-    - target: {fileID: 2835341548289371551, guid: 4a40bf2a923798945a40fa64206c7261, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2835341548289371551, guid: 4a40bf2a923798945a40fa64206c7261, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: CheckPassword
-      objectReference: {fileID: 0}
-    - target: {fileID: 3372921728082162788, guid: 4a40bf2a923798945a40fa64206c7261, type: 3}
-      propertyPath: errorText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3372921728082162788, guid: 4a40bf2a923798945a40fa64206c7261, type: 3}
-      propertyPath: inputField
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3372921728082162788, guid: 4a40bf2a923798945a40fa64206c7261, type: 3}
-      propertyPath: passwordPanel
-      value: 
-      objectReference: {fileID: 1544136513}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -165339,7 +165396,7 @@ PrefabInstance:
       objectReference: {fileID: 370125800}
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: requiresKey
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1411071736450882607, guid: 18ffb1175bd2ab24496f5df62606ceed, type: 3}
       propertyPath: requiredKeyId
@@ -165562,3 +165619,4 @@ SceneRoots:
   - {fileID: 342057005236759280}
   - {fileID: 6591620809730777992}
   - {fileID: 1985662866}
+  - {fileID: 1290814740}

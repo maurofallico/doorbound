@@ -13,7 +13,7 @@ public class MansionEntranceDoor : MonoBehaviour, IInteractable
     private Coroutine moveRoutine;
     private bool isOpen;
 
-    public string Prompt => "";
+    public string Prompt => isOpen ? "[E] Cerrar" : "[E] Abrir";
 
     private void Awake()
     {
