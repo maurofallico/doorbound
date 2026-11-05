@@ -74,6 +74,7 @@ public class PuzzleBotones : MonoBehaviour
             if (pasoActual == secuencia.Length)
             {
                 desbloqueada = true;
+                DoorboundAudio.Play(DoorboundAudio.Cue.PuzzleSolved, this);
                 Debug.Log("Puerta desbloqueada");
                 note.UnlockNote();
                 SetButtonLight(boton, true);

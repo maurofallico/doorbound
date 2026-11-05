@@ -37,6 +37,7 @@ public class Door : MonoBehaviour
     {
         if (!IsOpen)
         {
+            DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.DoorOpen, this);
             if (AnimationCoroutine != null)
             {
                 StopCoroutine(AnimationCoroutine);
@@ -99,6 +100,7 @@ public class Door : MonoBehaviour
     {
         if (IsOpen)
         {
+            DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.DoorClose, this);
             if (AnimationCoroutine != null)
             {
                 StopCoroutine(AnimationCoroutine);

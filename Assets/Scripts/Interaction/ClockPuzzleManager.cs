@@ -45,6 +45,7 @@ public class ClockPuzzleManager : MonoBehaviour
     private void SolvePuzzle()
     {
         puzzleSolved = true;
+        DoorboundAudio.Play(DoorboundAudio.Cue.PuzzleSolved, this);
 
         clock1.BlockInteraction();
         clock2.BlockInteraction();

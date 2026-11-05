@@ -41,6 +41,7 @@ public class FenceGate : MonoBehaviour, IInteractable
         if (IsInside(playerPosition) && !playerInventory.HasKey(requiredKeyId)) return;
 
         isOpen = true;
+        DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.Gate, this);
         float leftAngle = DoorSwing.AngleAwayFrom(leftHinge.position, leftLeafOffset, playerPosition, openAngle);
         float rightAngle = DoorSwing.AngleAwayFrom(rightHinge.position, rightLeafOffset, playerPosition, openAngle);
         MoveTo(leftClosed * Quaternion.Euler(0f, leftAngle, 0f), rightClosed * Quaternion.Euler(0f, rightAngle, 0f), openSpeed);
@@ -56,6 +57,7 @@ public class FenceGate : MonoBehaviour, IInteractable
     private void Close(float speed)
     {
         isOpen = false;
+        DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.Gate, this);
         MoveTo(leftClosed, rightClosed, speed);
     }
 
