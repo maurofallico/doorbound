@@ -102,7 +102,10 @@ public class PasswordDoor : MonoBehaviour, IInteractable
 
         StartCoroutine(MoverBarrotes());
 
-        sonidoBarrotes.Play();
+        if (sonidoBarrotes != null)
+            sonidoBarrotes.Play();
+        else
+            DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.Bars, this);
     }
 
     IEnumerator MoverBarrotes()

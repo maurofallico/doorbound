@@ -1,0 +1,7 @@
+Lever1.fbx, Gradients.jpg
+{
+  "author": "loafbrr (https://loafbrr.itch.io)",
+  "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+  "source": "https://loafbrr.itch.io/leversandswitches",
+  "title": "Levers and Switches"
+}

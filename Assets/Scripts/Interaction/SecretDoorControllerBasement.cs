@@ -19,6 +19,7 @@ public class SecretDoorControllerBasement : MonoBehaviour
 
     public void Open()
     {
+        DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.SecretDoor, this);
         StartCoroutine(OpenRoutine());
     }
 

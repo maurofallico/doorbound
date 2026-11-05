@@ -24,6 +24,7 @@ public class SecretDoorControllerUpstair : MonoBehaviour
 
     public void Open()
     {
+        DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.SecretDoor, this);
         button1.BlockInteraction();
         button2.BlockInteraction();
         button3.BlockInteraction();

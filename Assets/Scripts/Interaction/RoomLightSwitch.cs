@@ -17,7 +17,11 @@ public sealed class RoomLightSwitch : MonoBehaviour, IInteractable
 
     private void Awake() => SetLights(startsOn);
 
-    public void Interact(PlayerInventory playerInventory) => SetLights(!IsOn);
+    public void Interact(PlayerInventory playerInventory)
+    {
+        SetLights(!IsOn);
+        DoorboundAudio.PlayIfUnassigned(IsOn ? DoorboundAudio.Cue.LightOn : DoorboundAudio.Cue.LightOff, this);
+    }
 
     public void SetLights(bool on)
     {
