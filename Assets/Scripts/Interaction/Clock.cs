@@ -69,6 +69,7 @@ public class ClockInteraction : MonoBehaviour, IInteractable
 
         if (hand.HandType == ClockHandType.Hour)
         {
+            DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.ClockHour, this);
             CurrentHour++;
 
             if (CurrentHour > 12)
@@ -76,6 +77,7 @@ public class ClockInteraction : MonoBehaviour, IInteractable
         }
         else if (hand.HandType == ClockHandType.Minute)
         {
+            DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.ClockMinute, this);
             CurrentMinute += 5;
 
             if (CurrentMinute >= 60)

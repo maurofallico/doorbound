@@ -49,7 +49,7 @@ public class ClockPuzzleManager : MonoBehaviour
     private void SolvePuzzle()
     {
         puzzleSolved = true;
-
+        MusicManager.Instance.StartPuzzleSolvedMusic();
         clock1.BlockInteraction();
         clock2.BlockInteraction();
         clock3.BlockInteraction();

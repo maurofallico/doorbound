@@ -17,6 +17,7 @@ public class BotonPuzzle : MonoBehaviour, IInteractable
     {
         if (!CanInteract) return;
 
+        DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.Button, this);
         puzzleManager.PulsarBoton(numeroBoton);
     }
 

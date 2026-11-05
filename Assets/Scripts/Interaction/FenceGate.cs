@@ -17,6 +17,7 @@ public class FenceGate : MonoBehaviour, IInteractable
     private Vector3 rightLeafOffset;
     private Coroutine moveRoutine;
     private bool isOpen;
+    private bool stayOpen;
 
     public string Prompt => "";
 
@@ -30,9 +31,11 @@ public class FenceGate : MonoBehaviour, IInteractable
 
     public void Interact(PlayerInventory playerInventory)
     {
+        if (stayOpen) return;
+
         if (isOpen)
         {
-            Close(openSpeed);
+            Close(openSpeed, DoorboundAudio.Cue.Gate);
             return;
         }
 
@@ -41,6 +44,7 @@ public class FenceGate : MonoBehaviour, IInteractable
         if (IsInside(playerPosition) && !playerInventory.HasKey(requiredKeyId)) return;
 
         isOpen = true;
+        DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.Gate, this);
         float leftAngle = DoorSwing.AngleAwayFrom(leftHinge.position, leftLeafOffset, playerPosition, openAngle);
         float rightAngle = DoorSwing.AngleAwayFrom(rightHinge.position, rightLeafOffset, playerPosition, openAngle);
         MoveTo(leftClosed * Quaternion.Euler(0f, leftAngle, 0f), rightClosed * Quaternion.Euler(0f, rightAngle, 0f), openSpeed);
@@ -48,14 +52,29 @@ public class FenceGate : MonoBehaviour, IInteractable
 
     public void SlamShut()
     {
-        if (!isOpen) return;
+        if (!isOpen || stayOpen) return;
 
-        Close(slamSpeed);
+        Close(slamSpeed, DoorboundAudio.Cue.GateSlam);
     }
 
-    private void Close(float speed)
+    public void OpenForEscape()
+    {
+        stayOpen = true;
+        isOpen = true;
+        DoorboundAudio.PlayIfUnassigned(DoorboundAudio.Cue.Gate, this);
+
+        Vector3 inward = insideMarker != null ? insideMarker.position : transform.position;
+        Vector3 center = (leftHinge.position + rightHinge.position) * 0.5f;
+        Vector3 outside = center + (center - inward);
+        float leftAngle = DoorSwing.AngleAwayFrom(leftHinge.position, leftLeafOffset, outside, openAngle);
+        float rightAngle = DoorSwing.AngleAwayFrom(rightHinge.position, rightLeafOffset, outside, openAngle);
+        MoveTo(leftClosed * Quaternion.Euler(0f, leftAngle, 0f), rightClosed * Quaternion.Euler(0f, rightAngle, 0f), openSpeed);
+    }
+
+    private void Close(float speed, DoorboundAudio.Cue cue)
     {
         isOpen = false;
+        DoorboundAudio.PlayIfUnassigned(cue, this);
         MoveTo(leftClosed, rightClosed, speed);
     }
 
